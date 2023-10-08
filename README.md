@@ -15,14 +15,25 @@ cd bias-begone
 
 ### Setting up the Backend (FastAPI + SQLite):
 
-1. Create a virtual environment and activate it:
+1. Navigate to the backend directory:
+
+```bash
+cd FastAPI
+```
+
+2. Create a virtual environment and activate it:
 
 ```bash
 python -m venv env
 source env/bin/activate  # On Windows, use: .\env\Scripts\activate
 ```
 
-2. Start the FastAPI server:
+3. Import necessary libraries:
+```bash
+pip install fastapi uvicorn sqlalchemy
+```
+
+4. Start the FastAPI server:
 
 ```bash
 uvicorn main:app --reload
