@@ -7,6 +7,9 @@ from pydantic import BaseModel
 from database import SessionLocal, engine
 import models
 from fastapi.middleware.cors import CORSMiddleware # Security Cross origin
+from parseCSV import parser
+import os
+
 
 app = FastAPI()
 origins = [
@@ -22,6 +25,7 @@ app.add_middleware(
 )
 
 class TransactionBase(BaseModel):
+
     amount: float
     category: str
     description: str
@@ -60,3 +64,19 @@ async def read_transactions(db:db_dependency, skip: int = 0, limit: int = 100):
     # Query Parameters to fetch certain amount of transactions
     transactions = db.query(models.Transaction).offset(skip).limit(limit).all()
     return transactions
+
+@app.post('/uploadFile/', )
+async def upload_csv_file(file):
+    os.makedirs('data_dir', exist_ok=True)
+    file_path = os.path.join('data_dir', file.filename)
+    with open(file_path, "wb") as f:
+        f.write(file.file.read())
+    return {"message": "File uploaded and processed successfully", "data": output}
+
+@app.get('/download/{fileName}')
+async def download_processed_data(filename):
+    #dir where processed data is
+    data_dir = 'data_dir'
+    file_path = os.path.join(data_dir, filename)
+    output = parser.parseInput(file_path)
+    return output
