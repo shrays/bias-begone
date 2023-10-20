@@ -45,6 +45,7 @@ db_dependency = Annotated[Session, Depends(get_db)]
 
 models.Base.metadata.create_all(bind=engine)
 
+# sending the data to the backend/ @app is the react application
 @app.post("/transactions/", response_model=TransactionModel)
 async def create_transaction(transaction: TransactionBase, db: db_dependency):
     db_transaction = models.Transaction(**transaction.dict())
@@ -53,6 +54,7 @@ async def create_transaction(transaction: TransactionBase, db: db_dependency):
     db.refresh(db_transaction)
     return db_transaction
 
+# sending data from the backend
 @app.get("/transactions/", response_model=List[TransactionModel])
 async def read_transactions(db:db_dependency, skip: int = 0, limit: int = 100): 
     # Query Parameters to fetch certain amount of transactions
