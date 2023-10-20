@@ -1,4 +1,5 @@
 body {
+  background: #556271;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -10,4 +11,91 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.dropZone {
+  position: relative;
+  left: 1vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40vw;
+  height: 60vh;
+  border: 1px dashed #ffffff8a;
+  background: rgba(217, 217, 217, 0.00);
+  padding: 20px;
+  flex-shrink:0;
+  transition: border 0.3s;
+  &:hover {
+    border: 1px dashed #ffffff; /* Change background color on hover */
+    /* color: #fff; /* Change text color on hover */
+  }
+}
+
+p {
+  color: #FFF;
+  text-align: center;
+  font-family: Inter;
+  font-size: 1.75vw;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+h1 {
+  position: relative;
+  left: 1vw;
+  top: 2vw;
+  color: #FFF;
+  font-family: Inter;
+  font-size: 2vw;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  width: 302px;
+  height: 62px;
+  flex-shrink: 0;
+}
+
+h2 {
+  position: relative;
+  left: 1vw;
+  font-family: Inter;
+  font-size: 1.2vw;
+  color: #FFF;
+}
+
+.uploadButton {
+  width: 15vw;
+  height: 4vw;
+  flex-shrink: 0;
+  fill: #ffffffc0;
+  border: none;
+  transition: background-color 0.3s, color 0.3s;
+  border-radius: 10px;
+  font-size: 20px;
+
+  &:hover {
+    background-color: #ffffff; /* Change background color on hover */
+    /* color: #fff; /* Change text color on hover */
+  }
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('../Fonts/Inter.ttf') format('truetype');
+  /* Add other font properties if needed */
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-between; /* Adjust as needed */
+}
+
+.flex-item {
+  flex: 1; /* Allows items to grow equally */
+  padding: 10px; /* Example padding */
+  border: 0px;
+  /* border: 1px solid #ccc; Example border */
 }
