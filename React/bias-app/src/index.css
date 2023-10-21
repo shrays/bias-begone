@@ -37,7 +37,7 @@ p {
   color: #FFF;
   text-align: center;
   font-family: Inter;
-  font-size: 1.75vw;
+  font-size: 1.3vw;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -75,16 +75,34 @@ h2 {
   transition: background-color 0.3s, color 0.3s;
   border-radius: 10px;
   font-size: 20px;
+  color: #808080;
 
   &:hover {
     background-color: #ffffff; /* Change background color on hover */
-    /* color: #fff; /* Change text color on hover */
+    color: #000; /* Change text color on hover */
+  }
+}
+
+.smallButton {
+  width: 5vw;
+  height: 2vw;
+  flex-shrink: 0;
+  fill: #ffffffc0;
+  border: none;
+  transition: background-color 0.3s, color 0.3s;
+  border-radius: 5px;
+  font-size: 1vw;
+  color: #808080;
+
+  &:hover {
+    background-color: #ffffff; /* Change background color on hover */
+    color: #000; /* Change text color on hover */
   }
 }
 
 @font-face {
   font-family: 'Inter';
-  src: url('../Fonts/Inter.ttf') format('truetype');
+  src: url('Fonts/Inter.ttf') format('truetype');
   /* Add other font properties if needed */
 }
 
