@@ -1,6 +1,6 @@
 # Bread/Butter of FastAPI Application
 
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, HTTPException, Depends, UploadFile, File
 from typing import Annotated, List
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
@@ -65,18 +65,7 @@ async def read_transactions(db:db_dependency, skip: int = 0, limit: int = 100):
     transactions = db.query(models.Transaction).offset(skip).limit(limit).all()
     return transactions
 
-@app.post('/uploadFile/', )
-async def upload_csv_file(file):
-    os.makedirs('data_dir', exist_ok=True)
-    file_path = os.path.join('data_dir', file.filename)
-    with open(file_path, "wb") as f:
-        f.write(file.file.read())
-    return {"message": "File uploaded and processed successfully", "data": output}
-
-@app.get('/download/{fileName}')
-async def download_processed_data(filename):
-    #dir where processed data is
-    data_dir = 'data_dir'
-    file_path = os.path.join(data_dir, filename)
-    output = parser.parseInput(file_path)
-    return output
+@app.post("/uploadFile/")
+async def upload_file(file: UploadFile = File(...)):
+    print("got file")
+    return {"filename": file.filename}
