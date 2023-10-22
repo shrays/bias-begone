@@ -1,29 +1,30 @@
 import React, { useState, useRef } from "react";
+import api from '../api';
 
 const Home = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
+  //const [selectedFile, setSelectedFile] = useState(null);
   const [uploadMessage, setUploadMessage] = useState("");
 
   const handleUpload = async (event) => {
-    // convert the uploaded file into form data
-    const formData = new FormData();
-    formData.append("file", selectedFile);
-
-    try {
-      // TODO: change this
-      const response = await fetch("http://your-upload-url", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.status === 200) {
-        setUploadMessage("File uploaded successfully.");
-      } else {
-        setUploadMessage("Upload failed. Please try again.");
+    if (files) {
+      const formData = new FormData();
+      formData.append('csvFile', files[0]);
+  
+      try {
+        const response = await api.post('/uploadFile', formData); // Change the URL as needed
+        // Handle the response from the backend
+        console.log('File uploaded successfully:', response);
+        // Optionally, you can set a message or update your UI based on the response
+        setUploadMessage('File uploaded successfully.');
+      } catch (error) {
+        // Handle errors
+        console.error('Error uploading file:', error);
+        // Optionally, set an error message or update your UI based on the error
+        setUploadMessage('Error uploading file. Please try again.');
       }
-    } catch (error) {
-      console.error("Error uploading file:", error);
-      setUploadMessage("Upload failed. Please try again.");
+    } else {
+      // Handle the case where no file is selected
+      console.error('No file selected for upload.');
     }
   };
 
