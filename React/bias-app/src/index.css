@@ -70,16 +70,16 @@ h2 {
   width: 15vw;
   height: 4vw;
   flex-shrink: 0;
-  fill: #ffffffc0;
+  fill: #fff;
   border: none;
   transition: background-color 0.3s, color 0.3s;
   border-radius: 10px;
   font-size: 20px;
-  color: #808080;
+  color: #000;
 
   &:hover {
-    background-color: #ffffff; /* Change background color on hover */
-    color: #000; /* Change text color on hover */
+    background-color: #ff6865; /* Change background color on hover */
+    color: #fff; /* Change text color on hover */
   }
 }
 
@@ -87,16 +87,16 @@ h2 {
   width: 5vw;
   height: 2vw;
   flex-shrink: 0;
-  fill: #ffffffc0;
+  fill: #fff;
   border: none;
   transition: background-color 0.3s, color 0.3s;
   border-radius: 5px;
   font-size: 1vw;
-  color: #808080;
+  color: #000;
 
   &:hover {
-    background-color: #ffffff; /* Change background color on hover */
-    color: #000; /* Change text color on hover */
+    background-color: #ff6865; /* Change background color on hover */
+    color: #fff; /* Change text color on hover */
   }
 }
 
