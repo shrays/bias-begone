@@ -4,10 +4,6 @@ const Home = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadMessage, setUploadMessage] = useState("");
 
-  const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
-  };
-
   const handleUpload = async (event) => {
     // convert the uploaded file into form data
     const formData = new FormData();
