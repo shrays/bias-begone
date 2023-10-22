@@ -2,16 +2,16 @@ import React, { useState, useRef } from "react";
 import api from '../api';
 
 const Home = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
+  //const [selectedFile, setSelectedFile] = useState(null);
   const [uploadMessage, setUploadMessage] = useState("");
 
   const handleUpload = async (event) => {
-    if (selectedFile) {
+    if (files) {
       const formData = new FormData();
-      formData.append('csvFile', selectedFile);
+      formData.append('csvFile', files[0]);
   
       try {
-        const response = await api.post('/upload-csv', formData); // Change the URL as needed
+        const response = await api.post('/uploadFile', formData); // Change the URL as needed
         // Handle the response from the backend
         console.log('File uploaded successfully:', response);
         // Optionally, you can set a message or update your UI based on the response
