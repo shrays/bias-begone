@@ -1,31 +1,40 @@
 import React, { useState, useRef } from "react";
-import api from '../api';
+import api from "../api";
 
 const Home = () => {
   //const [selectedFile, setSelectedFile] = useState(null);
   const [uploadMessage, setUploadMessage] = useState("");
 
-  const handleUpload = async (event) => {
+  const HandleUpload = async (event) => {
     if (files) {
       const formData = new FormData();
-      formData.append('csvFile', files[0]);
-  
-      try {
-        const response = await api.post('/uploadFile', formData); // Change the URL as needed
-        // Handle the response from the backend
-        console.log('File uploaded successfully:', response);
-        // Optionally, you can set a message or update your UI based on the response
-        setUploadMessage('File uploaded successfully.');
-      } catch (error) {
-        // Handle errors
-        console.error('Error uploading file:', error);
-        // Optionally, set an error message or update your UI based on the error
-        setUploadMessage('Error uploading file. Please try again.');
-      }
-    } else {
-      // Handle the case where no file is selected
-      console.error('No file selected for upload.');
+      formData.append("csvFile", files[0]);
+
+      fetch("/uploadFile/", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+        .catch((error) => console.log(error));
     }
+
+    //   try {
+    //     const response = await api.post('/uploadFile/', formData); // Change the URL as needed
+    //     // Handle the response from the backend
+    //     console.log('File uploaded successfully:', response);
+    //     // Optionally, you can set a message or update your UI based on the response
+    //     setUploadMessage('File uploaded successfully.');
+    //   } catch (error) {
+    //     // Handle errors
+    //     console.error('Error uploading file:', error);
+    //     // Optionally, set an error message or update your UI based on the error
+    //     setUploadMessage('Error uploading file. Please try again.');
+    //   }
+    // } else {
+    //   // Handle the case where no file is selected
+    //   console.error('No file selected for upload.');
+    // }
   };
 
   const [files, setFiles] = useState(null);
@@ -55,7 +64,7 @@ const Home = () => {
         // Display an error message for non-CSV files
         alert("Please drop a CSV file.");
 
-        // or change the UI
+        // or change the UI --> this is not working
         return (
           <div className="flex-container">
             <div className="flex-item">
@@ -145,7 +154,7 @@ const Home = () => {
               >
                 Cancel
               </button>
-              <button className="smallButton" onClick={handleUpload}>
+              <button className="smallButton" onClick={HandleUpload}>
                 Upload
               </button>
             </div>
