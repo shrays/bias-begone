@@ -57,11 +57,11 @@ class parser():
         df =  df.dropna()
 
         # encoding string data to numerical data
-        def label_encode(col):
+        def label_encode(self, col):
             le = LabelEncoder()
             return le.fit_transform(col)
 
-        def one_hot_encode(df, col):
+        def one_hot_encode(self, df, col):
             ohe = OneHotEncoder(sparse=False)
             encoded_cols = pd.DataFrame(ohe.fit_transform(df[[col]]))
             df = pd.concat([df, encoded_cols], axis=1)

@@ -5,6 +5,7 @@ const Home = () => {
   //const [selectedFile, setSelectedFile] = useState(null);
   const [uploadMessage, setUploadMessage] = useState("");
   const [columnNames, setColumnNames] = useState([]);
+  const [heatMap, setHeatMap] = useState([]);
   const [isEditingColumnNames, setIsEditingColumnNames] = useState(false);
   const [editedColumnNames, setEditedColumnNames] = useState([...columnNames]);
   const [isEditingButtonVisible, setIsEditingButtonVisible] = useState(false);
@@ -46,8 +47,13 @@ const Home = () => {
       const data = { columnNames };
   
       const response = await api.post('/start/', data);
-  
       if (response.status === 200) {
+        
+        const {heatMap } = response.data;
+        if (heatMap) {
+          setHeatMap(heatMap);
+          console.log(heatMap);
+        }
         console.log('New column names successfully sent');
       } else {
         console.error('New column names not sent:', response.data);

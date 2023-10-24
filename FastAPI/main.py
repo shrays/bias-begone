@@ -10,6 +10,7 @@ from parseCSV import parser
 import io, models
 import pandas as pd
 from fastapi.responses import JSONResponse
+from matrix import construct_corr_from_df
 
 app = FastAPI()
 origins = [
@@ -104,6 +105,8 @@ async def start(data: ColumnData):
     df.columns = column_names
     # dataframe with updated column names
     print(df)
-    # Maybe start the script from here?
-
-    return {"message": "Column names received successfully"}
+    heatmap_data = construct_corr_from_df(df)
+    print(heatmap_data)
+    return JSONResponse(content={
+                'heatMap':  heatmap_data,
+            })
