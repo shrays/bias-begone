@@ -8,6 +8,7 @@ from database import SessionLocal, engine
 import models
 from fastapi.middleware.cors import CORSMiddleware # Security Cross origin
 from parseCSV import parser
+
 import os
 
 
@@ -65,7 +66,25 @@ async def read_transactions(db:db_dependency, skip: int = 0, limit: int = 100):
     transactions = db.query(models.Transaction).offset(skip).limit(limit).all()
     return transactions
 
-@app.post("/uploadFile/")
-async def upload_file(file: UploadFile = File(...)):
-    print("got file")
+@app.post('/fileUpload/')
+async def upload_csv_file(file: UplaodFile):
+    
+    file_content = await file.read()
+    print(file_content)
     return {"filename": file.filename}
+    
+    # os.makedirs('data_dir', exist_ok=True)
+    # file_path = os.path.join('data_dir', file.filename)
+    
+    # with open(file_path, "wb") as f:
+    #     f.write(file.file.read())
+        
+    # return {"message": "File uploaded and processed successfully", "data": output}
+
+@app.get('/download/{fileName}')
+async def download_processed_data(filename):
+    #dir where processed data is
+    data_dir = 'data_dir'
+    file_path = os.path.join(data_dir, filename)
+    output = parser.parseInput(file_path)
+    return output
