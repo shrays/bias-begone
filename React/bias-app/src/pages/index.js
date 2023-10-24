@@ -8,33 +8,25 @@ const Home = () => {
   const HandleUpload = async (event) => {
     if (files) {
       const formData = new FormData();
-      formData.append("csvFile", files[0]);
+      formData.append("file", files[0]);
 
-      fetch("/uploadFile/", {
-        method: "POST",
-        body: formData,
-      })
-        .then((response) => response.json())
-        .then((data) => console.log(data))
-        .catch((error) => console.log(error));
+      try {
+        const response = await api.post('/uploadFile/', formData);
+        console.log(response.data.filename);
+      } catch (e) {
+        console.error('File upload failed',e);
+      }
+    
+      // fetch("/uploadFile/", {
+      //   method: "POST",
+      //   body: formData,
+      // })
+      //   .then((response) => response.json())
+      //   .then((data) => console.log(data))
+      //   .catch((error) => console.log(error));
+      alert("File upload success"); // for debugging
     }
 
-    //   try {
-    //     const response = await api.post('/uploadFile/', formData); // Change the URL as needed
-    //     // Handle the response from the backend
-    //     console.log('File uploaded successfully:', response);
-    //     // Optionally, you can set a message or update your UI based on the response
-    //     setUploadMessage('File uploaded successfully.');
-    //   } catch (error) {
-    //     // Handle errors
-    //     console.error('Error uploading file:', error);
-    //     // Optionally, set an error message or update your UI based on the error
-    //     setUploadMessage('Error uploading file. Please try again.');
-    //   }
-    // } else {
-    //   // Handle the case where no file is selected
-    //   console.error('No file selected for upload.');
-    // }
   };
 
   const [files, setFiles] = useState(null);
