@@ -67,7 +67,7 @@ async def read_transactions(db:db_dependency, skip: int = 0, limit: int = 100):
     return transactions
 
 @app.post('/fileUpload/')
-async def upload_csv_file(file: UplaodFile):
+async def upload_csv_file(file: UploadFile):
     
     file_content = await file.read()
     print(file_content)
