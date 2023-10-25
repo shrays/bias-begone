@@ -1,22 +1,26 @@
 import React, { useState, useRef } from "react";
+import { Link, Route, Routes } from "react-router-dom";
 import api from "../api";
+import DisplayBias from './DisplayBias';
 
 const Home = () => {
   //const [selectedFile, setSelectedFile] = useState(null);
   const [uploadMessage, setUploadMessage] = useState("");
+  
 
   const HandleUpload = async (event) => {
     if (files) {
       const formData = new FormData();
       formData.append("file", files[0]);
 
+      // try to get the file using post
       try {
         const response = await api.post('/uploadFile/', formData);
         console.log(response.data.filename);
       } catch (e) {
         console.error('File upload failed',e);
       }
-    
+      window.location.href = '/DisplayBias';
       // fetch("/uploadFile/", {
       //   method: "POST",
       //   body: formData,
@@ -28,7 +32,6 @@ const Home = () => {
     }
 
   };
-
   const [files, setFiles] = useState(null);
   const inputref = useRef();
 
