@@ -5,6 +5,16 @@ const Home = () => {
   //const [selectedFile, setSelectedFile] = useState(null);
   const [uploadMessage, setUploadMessage] = useState("");
 
+  const [columnNames, setColumnNames] = useState([]);
+
+  const [isEditingColumnNames, setIsEditingColumnNames] = useState(false);
+  const [editedColumnNames, setEditedColumnNames] = useState([...columnNames]);
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
   const HandleUpload = async (event) => {
     if (files) {
       const formData = new FormData();
@@ -12,18 +22,19 @@ const Home = () => {
 
       try {
         const response = await api.post('/uploadFile/', formData);
-        console.log(response.data.filename);
+        const { columnNames, columnDataTypes } = response.data;
+        console.log(response)
+        if (columnNames) {
+
+          setColumnNames(columnNames);
+          setUploadMessage("File uploaded successfully. Please confirm column names.");
+        } else {
+          setUploadMessage("File uploaded successfully, but no column information received.");
+        }
       } catch (e) {
         console.error('File upload failed',e);
       }
     
-      // fetch("/uploadFile/", {
-      //   method: "POST",
-      //   body: formData,
-      // })
-      //   .then((response) => response.json())
-      //   .then((data) => console.log(data))
-      //   .catch((error) => console.log(error));
       alert("File upload success"); // for debugging
     }
 
@@ -112,49 +123,109 @@ const Home = () => {
     }
   };
 
+  const handleEditColumnName = (index, newName) => {
+    const updatedNames = [...editedColumnNames];
+    updatedNames[index] = newName;
+    setEditedColumnNames(updatedNames);
+  };
+
+  // Function to save the edited column names
+  const handleSaveColumnNames = () => {
+    setColumnNames([...editedColumnNames]);
+    setIsEditingColumnNames(false);
+  };
+
   // UI after file upload
-  if (files)
-    return (
-      <div className="flex-container">
-        <div className="flex-item">
-          <h1 style={{ left: "10vw", fontSize: "3vw" }}>
-            <span style={{ color: "white" }}>What is </span>
-            <span style={{ color: "#FF6966" }}>bias</span>
-          </h1>
-          <h1 style={{ left: "10vw", fontSize: "3vw", top: "0.5vw" }}>
-            in datasets?
-          </h1>
+  if (files) {
+    if (isEditingColumnNames) {
+      return (
+        <div className="flex-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', height: '100%' }}>
+          <div className="flex-item">
+            <h1>Edit Column Names</h1>
+            <ul>
+              {editedColumnNames.map((name, index) => (
+                <li key={index}>
+                  <label>Column {index + 1}:</label>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => handleEditColumnName(index, e.target.value)}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="actions" style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
+            <button
+              className="smallButton"
+              onClick={() => setIsEditingColumnNames(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className="smallButton"
+              onClick={handleSaveColumnNames}
+              style={{ width: "170px", marginLeft: '10px' }}
+            >
+              Save Column Names
+            </button>
+          </div>
         </div>
-        <div className="flex-item">
-          <h1>Upload File</h1>
-          <h2>
-            Start detecting the bias in your dataset by uploading your csv file
-          </h2>
-          <div className="dropZone">
-            <img
-              src={require("../Assets/document.png")}
-              style={{ width: "5vw", height: "5vw", marginBottom: "2vw" }}
-            />
-            {Array.from(files).map((file, idx) => (
-              <p key={idx}>{file.name}</p>
-            ))}
-            <div className="actions">
-              <button
-                className="smallButton"
-                onClick={() => setFiles(null)}
-                style={{ marginRight: "1vw" }}
-              >
-                Cancel
-              </button>
-              <button className="smallButton" onClick={HandleUpload}>
-                Upload
-              </button>
+      );
+  } else {
+      return (
+        <div className="flex-container">
+          <div className="flex-item">
+            <h1 style={{ left: "10vw", fontSize: "3vw" }}>
+              <span style={{ color: "white" }}>What is </span>
+              <span style={{ color: "#FF6966" }}>bias</span>
+            </h1>
+            <h1 style={{ left: "10vw", fontSize: "3vw", top: "0.5vw" }}>
+              in datasets?
+            </h1>
+          </div>
+          <div className="flex-item">
+            <h1>Upload File</h1>
+            <h2>
+              Start detecting the bias in your dataset by uploading your csv file
+            </h2>
+            <div className="dropZone">
+              <img
+                src={require("../Assets/document.png")}
+                style={{ width: "5vw", height: "5vw", marginBottom: "2vw" }}
+              />
+              {Array.from(files).map((file, idx) => (
+                <p key={idx}>{file.name}</p>
+              ))}
+              <div className="actions">
+                <div style={{ marginTop: "8px" }}>
+                  <button
+                    className="smallButton"
+                    onClick={() => setFiles(null)}
+                    style={{ marginRight: "1vw" }}
+                  >
+                    Cancel
+                  </button>
+                  <button className="smallButton" onClick={HandleUpload}>
+                    Upload
+                  </button>
+                </div>
+                <div style={{ marginTop: "10px" }}>
+                  <button
+                    className="smallButton"
+                    onClick={() => setIsEditingColumnNames(true)}
+                    style={{ width: "170px" }}
+                  >
+                    Edit Column Names
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    );
-
+      );
+    }
+  }
   // UI before file upload
   return (
     <div className="flex-container">

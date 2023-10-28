@@ -11,12 +11,12 @@ class parser():
     def __init__(self) -> None:
         pass
     
-    def parseInput(self, file):
-        # if len(sys.argv) < 2:
-        #     print('CSV file needs to be provided')
-        #     sys.exit()
-        # file_name = sys.argv[1]
-        file_name = file 
+    def parseInput(self):
+        if len(sys.argv) < 2:
+            print('CSV file needs to be provided')
+            sys.exit()
+        file_name = sys.argv[1]
+        #file_name = file 
         # start parsing of csv file  
         df = pd.read_csv(file_name)
         # parsing columns  and rows
