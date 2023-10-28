@@ -75,7 +75,7 @@ const Home = () => {
                 <span style={{ color: "white" }}>What is </span>
                 <span style={{ color: "#FF6966" }}>bias</span>
               </h1>
-              <h1 style={{ left: "10vw", fontSize: "3vw", top: "0.5vw" }}>
+              <h1 style={{ left: "10vw", fontSize: "3vw"}}>
                 in datasets?
               </h1>
             </div>
