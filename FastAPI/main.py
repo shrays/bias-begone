@@ -1,6 +1,6 @@
 # Bread/Butter of FastAPI Application
 
-from fastapi import FastAPI, HTTPException, Depends, UploadFile, File 
+from fastapi import FastAPI, HTTPException, Depends, UploadFile, File
 from typing import Annotated, List
 from sqlalchemy.orm import Session
 from pydantic import BaseModel

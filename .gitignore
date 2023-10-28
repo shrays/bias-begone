@@ -2,6 +2,7 @@
 env
 *.pyc
 *.db
+.vscode
 
 # Logs
 logs
