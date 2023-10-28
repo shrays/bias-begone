@@ -1,15 +1,15 @@
 # Bread/Butter of FastAPI Application
 
-from fastapi import FastAPI, HTTPException, Depends, UploadFile, File
+from fastapi import FastAPI, HTTPException, Depends, UploadFile, File 
 from typing import Annotated, List
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from database import SessionLocal, engine
-import models
 from fastapi.middleware.cors import CORSMiddleware # Security Cross origin
 from parseCSV import parser
-import os
-
+import io, models
+import pandas as pd
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
 origins = [
@@ -67,5 +67,29 @@ async def read_transactions(db:db_dependency, skip: int = 0, limit: int = 100):
 
 @app.post("/uploadFile/")
 async def upload_file(file: UploadFile = File(...)):
-    print("got file")
-    return {"filename": file.filename}
+    # Save the uploaded file to a temporary location
+    # file_path = "data_dir/" + file.filename
+    # with open(file_path, "wb") as f:
+    #     f.write(file.file.read())
+
+    # Call your Python script with the file as an argument
+    #script_path = "parseCSV.py"
+    #subprocess.run(["python", script_path, file_path])
+    if file:
+        try:
+            content = await file.read()
+            df = pd.read_csv(io.BytesIO(content))
+
+            column_names = df.columns.tolist()
+            column_data_types = df.dtypes.tolist()
+            return JSONResponse(content={
+                'columnNames': column_names,
+                'columnDataTypes': [str(dtype) for dtype in column_data_types],
+            })
+        
+
+        except Exception as e:
+            print("error",e)
+            return JSONResponse(content={'error': str(e)})
+
+    return JSONResponse(content={'error': 'No file provided'})
