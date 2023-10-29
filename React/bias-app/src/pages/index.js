@@ -6,14 +6,9 @@ const Home = () => {
   const [uploadMessage, setUploadMessage] = useState("");
 
   const [columnNames, setColumnNames] = useState([]);
-
   const [isEditingColumnNames, setIsEditingColumnNames] = useState(false);
   const [editedColumnNames, setEditedColumnNames] = useState([...columnNames]);
-  const [isEditing, setIsEditing] = useState(false);
-
-  const handleEditClick = () => {
-    setIsEditing(true);
-  };
+  const [isEditingFormVisible, setIsEditingFormVisible] = useState(false);
 
   const HandleUpload = async (event) => {
     if (files) {
@@ -32,9 +27,9 @@ const Home = () => {
           setUploadMessage("File uploaded successfully, but no column information received.");
         }
       } catch (e) {
-        console.error('File upload failed',e);
+        console.error('File upload failed', e);
       }
-    
+
       alert("File upload success"); // for debugging
     }
 
@@ -75,7 +70,7 @@ const Home = () => {
                 <span style={{ color: "white" }}>What is </span>
                 <span style={{ color: "#FF6966" }}>bias</span>
               </h1>
-              <h1 style={{ left: "10vw", fontSize: "3vw"}}>
+              <h1 style={{ left: "10vw", fontSize: "3vw" }}>
                 in datasets?
               </h1>
             </div>
@@ -124,6 +119,7 @@ const Home = () => {
   };
 
   const handleEditColumnName = (index, newName) => {
+    console.log(newName)
     const updatedNames = [...editedColumnNames];
     updatedNames[index] = newName;
     setEditedColumnNames(updatedNames);
@@ -133,7 +129,10 @@ const Home = () => {
   const handleSaveColumnNames = () => {
     setColumnNames([...editedColumnNames]);
     setIsEditingColumnNames(false);
+    setIsEditingFormVisible(false); // Hide the form after saving
   };
+
+
 
   // UI after file upload
   if (files) {
@@ -142,18 +141,27 @@ const Home = () => {
         <div className="flex-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', height: '100%' }}>
           <div className="flex-item">
             <h1>Edit Column Names</h1>
-            <ul>
-              {editedColumnNames.map((name, index) => (
-                <li key={index}>
-                  <label>Column {index + 1}:</label>
+            <div style={{ color: 'white', display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+              <div style={{ flex: 1 }}>
+                <label>Current Names</label>
+              </div>
+              <div style={{ flex: 1 }}>
+                <label>Enter New Names</label>
+              </div>
+            </div>
+            <div style={{ color: 'white', marginBottom: '10px' }}>
+              {columnNames.map((name, index) => (
+                <div key={index} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                  <label style={{ flex: 1, marginRight: '10px' }}>{name}:</label>
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => handleEditColumnName(index, e.target.value)}
+                    style={{ flex: 1 }}
                   />
-                </li>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
           <div className="actions" style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
             <button
@@ -172,7 +180,7 @@ const Home = () => {
           </div>
         </div>
       );
-  } else {
+    } else {
       return (
         <div className="flex-container">
           <div className="flex-item">
