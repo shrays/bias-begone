@@ -1,13 +1,13 @@
 import React from "react";
 
-const About = () => {
+const Summary = () => {
 	return (
 		<div className="page">
 			<h1>
-				About HTML
+				Summary HTML
 			</h1>
 		</div>
 	);
 };
 
-export default About;
+export default Summary;

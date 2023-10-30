@@ -30,7 +30,7 @@ source env/bin/activate  # On Windows, use: .\env\Scripts\activate
 
 3. Import necessary libraries:
 ```bash
-pip install fastapi uvicorn sqlalchemy
+python3 setup_environment.py
 ```
 
 4. Start the FastAPI server:
