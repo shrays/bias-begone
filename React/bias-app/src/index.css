@@ -13,6 +13,10 @@ code {
     monospace;
 }
 
+.page {
+  padding: 0 10rem 0 10rem;
+}
+
 .dropZone {
   position: relative;
   left: 1vw;
