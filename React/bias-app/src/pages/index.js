@@ -4,11 +4,13 @@ import api from "../api";
 const Home = () => {
   //const [selectedFile, setSelectedFile] = useState(null);
   const [uploadMessage, setUploadMessage] = useState("");
-
   const [columnNames, setColumnNames] = useState([]);
   const [isEditingColumnNames, setIsEditingColumnNames] = useState(false);
   const [editedColumnNames, setEditedColumnNames] = useState([...columnNames]);
+  const [isEditingButtonVisible, setIsEditingButtonVisible] = useState(false);
   const [isEditingFormVisible, setIsEditingFormVisible] = useState(false);
+  const [files, setFiles] = useState(null);
+  const inputref = useRef();
 
   const HandleUpload = async (event) => {
     if (files) {
@@ -18,12 +20,12 @@ const Home = () => {
       try {
         const response = await api.post('/uploadFile/', formData);
         const { columnNames, columnDataTypes } = response.data;
-        
+
         if (columnNames) {
 
           setColumnNames(columnNames);
           setEditedColumnNames(columnNames);
-          console.log(editedColumnNames)
+          setIsEditingButtonVisible(true);
           setUploadMessage("File uploaded successfully. Please confirm column names.");
         } else {
           setUploadMessage("File uploaded successfully, but no column information received.");
@@ -36,9 +38,6 @@ const Home = () => {
     }
 
   };
-
-  const [files, setFiles] = useState(null);
-  const inputref = useRef();
 
   // handle file drag
   const handleDragOver = (event) => {
@@ -211,7 +210,10 @@ const Home = () => {
                 <div style={{ marginTop: "8px" }}>
                   <button
                     className="smallButton"
-                    onClick={() => setFiles(null)}
+                    onClick={() => {
+                      setFiles(null);
+                      setIsEditingButtonVisible(false);
+                    }}
                     style={{ marginRight: "1vw" }}
                   >
                     Cancel
@@ -221,13 +223,17 @@ const Home = () => {
                   </button>
                 </div>
                 <div style={{ marginTop: "10px" }}>
-                  <button
-                    className="smallButton"
-                    onClick={() => setIsEditingColumnNames(true)}
-                    style={{ width: "170px" }}
-                  >
-                    Edit Column Names
-                  </button>
+                  {isEditingButtonVisible ? (
+                    <button
+                      className="smallButton"
+                      onClick={() => setIsEditingColumnNames(true)}
+                      style={{ width: "170px" }}
+                    >
+                      Edit Column Names
+                    </button>
+                  ) : (
+                    <p> Please click upload </p>
+                  )}
                 </div>
               </div>
             </div>
