@@ -18,10 +18,12 @@ const Home = () => {
       try {
         const response = await api.post('/uploadFile/', formData);
         const { columnNames, columnDataTypes } = response.data;
-        console.log(response)
+        
         if (columnNames) {
 
           setColumnNames(columnNames);
+          setEditedColumnNames(columnNames);
+          console.log(editedColumnNames)
           setUploadMessage("File uploaded successfully. Please confirm column names.");
         } else {
           setUploadMessage("File uploaded successfully, but no column information received.");
@@ -155,7 +157,7 @@ const Home = () => {
                   <label style={{ flex: 1, marginRight: '10px' }}>{name}:</label>
                   <input
                     type="text"
-                    value={name}
+                    value={null}
                     onChange={(e) => handleEditColumnName(index, e.target.value)}
                     style={{ flex: 1 }}
                   />
