@@ -45,6 +45,9 @@ def get_db():
     finally:
         db.close()
 
+class ColumnData(BaseModel):
+    columnNames: list
+
 db_dependency = Annotated[Session, Depends(get_db)]
 
 models.Base.metadata.create_all(bind=engine)
@@ -67,29 +70,40 @@ async def read_transactions(db:db_dependency, skip: int = 0, limit: int = 100):
 
 @app.post("/uploadFile/")
 async def upload_file(file: UploadFile = File(...)):
-    # Save the uploaded file to a temporary location
-    # file_path = "data_dir/" + file.filename
-    # with open(file_path, "wb") as f:
-    #     f.write(file.file.read())
-
-    # Call your Python script with the file as an argument
-    #script_path = "parseCSV.py"
-    #subprocess.run(["python", script_path, file_path])
     if file:
         try:
             content = await file.read()
             df = pd.read_csv(io.BytesIO(content))
 
+            # Define the path where you want to save the uploaded file
+            file_path = "file.csv"
+
+            # Save the uploaded file to the specified path
+            with open(file_path, "wb") as f:
+                f.write(content)
+
             column_names = df.columns.tolist()
             column_data_types = df.dtypes.tolist()
+            print(column_data_types)
             return JSONResponse(content={
                 'columnNames': column_names,
                 'columnDataTypes': [str(dtype) for dtype in column_data_types],
             })
-        
 
         except Exception as e:
-            print("error",e)
+            print("error", e)
             return JSONResponse(content={'error': str(e)})
 
     return JSONResponse(content={'error': 'No file provided'})
+
+
+@app.post("/start/")
+async def start(data: ColumnData):
+    column_names = data.columnNames
+    df = pd.read_csv("file.csv")
+    df.columns = column_names
+    # dataframe with updated column names
+    print(df)
+    # Maybe start the script from here?
+
+    return {"message": "Column names received successfully"}

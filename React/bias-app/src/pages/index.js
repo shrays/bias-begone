@@ -26,6 +26,7 @@ const Home = () => {
           setColumnNames(columnNames);
           setEditedColumnNames(columnNames);
           setIsEditingButtonVisible(true);
+          console.log(columnNames);
           setUploadMessage("File uploaded successfully. Please confirm column names.");
         } else {
           setUploadMessage("File uploaded successfully, but no column information received.");
@@ -37,6 +38,23 @@ const Home = () => {
       alert("File upload success"); // for debugging
     }
 
+  };
+
+  // Start
+  const Start = async (event) => {
+    try {
+      const data = { columnNames };
+  
+      const response = await api.post('/start/', data);
+  
+      if (response.status === 200) {
+        console.log('New column names successfully sent');
+      } else {
+        console.error('New column names not sent:', response.data);
+      }
+    } catch (error) {
+      console.error('New column names not sent:', error);
+    }
   };
 
   // handle file drag
@@ -224,15 +242,28 @@ const Home = () => {
                 </div>
                 <div style={{ marginTop: "10px" }}>
                   {isEditingButtonVisible ? (
-                    <button
-                      className="smallButton"
-                      onClick={() => setIsEditingColumnNames(true)}
-                      style={{ width: "170px" }}
-                    >
-                      Edit Column Names
-                    </button>
+                    <div>
+                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                        <button
+                          className="smallButton"
+                          onClick={() => setIsEditingColumnNames(true)}
+                          style={{ width: "170px" }}
+                        >
+                          Edit Column Names
+                        </button>
+                      </div>
+                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "12px" }}>
+                        <button
+                        className="smallButton"
+                        onClick={() => Start()}
+                        style={{ width: "70px" }}
+                        >
+                          Start
+                        </button>
+                      </div>
+                    </div>
                   ) : (
-                    <p> Please click upload </p>
+                    <p>Please click upload</p>
                   )}
                 </div>
               </div>

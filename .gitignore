@@ -3,6 +3,7 @@ env
 *.pyc
 *.db
 .vscode
+file.csv
 
 # Logs
 logs

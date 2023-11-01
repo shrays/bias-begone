@@ -105,10 +105,3 @@ class parser():
 
         
     # print(df.head())
-
-
-
-
-
-
-
