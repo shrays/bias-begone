@@ -10,6 +10,7 @@ from parseCSV import parser
 import io, models
 import pandas as pd
 from fastapi.responses import JSONResponse
+from matrix import construct_corr_from_df
 
 app = FastAPI()
 origins = [
@@ -96,7 +97,9 @@ async def upload_file(file: UploadFile = File(...)):
 
     return JSONResponse(content={'error': 'No file provided'})
 
-
+#  update the df to new column names
+#  also, it create a correlation heatmap data and sends it to the front end 
+# check console.log for the data received
 @app.post("/start/")
 async def start(data: ColumnData):
     column_names = data.columnNames
@@ -104,6 +107,8 @@ async def start(data: ColumnData):
     df.columns = column_names
     # dataframe with updated column names
     print(df)
-    # Maybe start the script from here?
-
-    return {"message": "Column names received successfully"}
+    heatmap_data = construct_corr_from_df(df)
+    print(heatmap_data)
+    return JSONResponse(content={
+                'heatMap':  heatmap_data,
+            })
