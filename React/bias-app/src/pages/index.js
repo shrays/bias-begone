@@ -5,7 +5,7 @@ const Home = () => {
   //const [selectedFile, setSelectedFile] = useState(null);
   const [uploadMessage, setUploadMessage] = useState("");
   const [columnNames, setColumnNames] = useState([]);
-  const [heatMap, setHeatMap] = useState([]);
+  const [heatMap, setHeatMap] = useState([]);   // heatmap data is a 2D list
   const [isEditingColumnNames, setIsEditingColumnNames] = useState(false);
   const [editedColumnNames, setEditedColumnNames] = useState([...columnNames]);
   const [isEditingButtonVisible, setIsEditingButtonVisible] = useState(false);
@@ -48,7 +48,7 @@ const Home = () => {
   
       const response = await api.post('/start/', data);
       if (response.status === 200) {
-        
+        // HeatMap Data is received here
         const {heatMap } = response.data;
         if (heatMap) {
           setHeatMap(heatMap);

@@ -97,7 +97,9 @@ async def upload_file(file: UploadFile = File(...)):
 
     return JSONResponse(content={'error': 'No file provided'})
 
-
+#  update the df to new column names
+#  also, it create a correlation heatmap data and sends it to the front end 
+# check console.log for the data received
 @app.post("/start/")
 async def start(data: ColumnData):
     column_names = data.columnNames

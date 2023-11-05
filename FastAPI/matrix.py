@@ -4,7 +4,7 @@ from parseCSV import parser
 from sklearn import datasets
 import seaborn as sns
 import matplotlib.pyplot as plt
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+from sklearn.preprocessing import LabelEncoder
 
 
 # this method will take 2d list, and a list of column names
