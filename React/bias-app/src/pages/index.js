@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import api from "../api";
 
 const Home = () => {
@@ -6,10 +6,12 @@ const Home = () => {
   const [uploadMessage, setUploadMessage] = useState("");
   const [columnNames, setColumnNames] = useState([]);
   const [heatMap, setHeatMap] = useState([]);   // heatmap data is a 2D list
+  const [openai_resp, setopenai_resp] = useState("");
   const [isEditingColumnNames, setIsEditingColumnNames] = useState(false);
   const [editedColumnNames, setEditedColumnNames] = useState([...columnNames]);
   const [isEditingButtonVisible, setIsEditingButtonVisible] = useState(false);
   const [isEditingFormVisible, setIsEditingFormVisible] = useState(false);
+  const [visibleTextIndex, setVisibleTextIndex] = useState(0);
   const [files, setFiles] = useState(null);
   const inputref = useRef();
 
@@ -45,12 +47,13 @@ const Home = () => {
   const Start = async (event) => {
     try {
       const data = { columnNames };
-  
+
       const response = await api.post('/start/', data);
       if (response.status === 200) {
         // HeatMap Data is received here
-        const {heatMap } = response.data;
+        const { heatMap, openai_resp } = response.data;
         if (heatMap) {
+          setopenai_resp(openai_resp);
           setHeatMap(heatMap);
           console.log(heatMap);
         }
@@ -126,6 +129,34 @@ const Home = () => {
     }
   };
 
+  const typeOpenaiResp = () => {
+    const text = openai_resp;
+
+    if (visibleTextIndex < text.length) {
+      setTimeout(() => {
+        setVisibleTextIndex(visibleTextIndex + 1);
+      }, 50); // Reduce the delay for a faster animation
+    }
+  };
+
+
+if (heatMap && openai_resp) {
+  typeOpenaiResp();
+  return (
+    <div>
+      <div className="flex-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'left', justifyContent: 'space-between', height: '100%' }}>
+        <h1 style={{ marginLeft: '210px', marginBottom: '-20px' }}>Summary</h1>
+        <h1 style={{ marginLeft: 'auto', marginRight: '200px', marginBottom: '-20px' }}>Heatmap</h1>
+        <div className="left-aligned-boundary">
+          <p style={{ textAlign: 'left' }}>
+            {openai_resp.slice(0, visibleTextIndex)}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
   // handle file selection
   const handleFileSelection = (selectedFiles) => {
     if (selectedFiles.length > 0) {
@@ -154,7 +185,7 @@ const Home = () => {
   const handleSaveColumnNames = () => {
     setColumnNames([...editedColumnNames]);
     setIsEditingColumnNames(false);
-    setIsEditingFormVisible(false); // Hide the form after saving
+    setIsEditingFormVisible(false);
   };
 
 
@@ -260,9 +291,9 @@ const Home = () => {
                       </div>
                       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "12px" }}>
                         <button
-                        className="smallButton"
-                        onClick={() => Start()}
-                        style={{ width: "70px" }}
+                          className="smallButton"
+                          onClick={() => Start()}
+                          style={{ width: "70px" }}
                         >
                           Start
                         </button>
