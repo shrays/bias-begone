@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+
+.left-aligned-boundary {
+  max-width: 500px; /* Adjust the maximum width as needed */
+  margin: 70px 0 0 60px; /* Adjust margin for top, right, bottom, left */
+  padding: 0; /* Set padding to zero */
+  border: 1px solid transparent; /* Invisible border */
+  overflow: hidden; /* Hide overflowing content */
+  text-align: left; /* Left-align the text within the boundary */
+}

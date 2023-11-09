@@ -109,6 +109,8 @@ async def start(data: ColumnData):
     print(df)
     heatmap_data = construct_corr_from_df(df)
     print(heatmap_data)
+    openai_resp = "random text placeholder for now Announcing of invitation principles in. Cold in late or deal. Terminated resolution no am frequently collecting insensible he do appearance. Projection invitation affronting admiration if no on or. It as instrument boisterous frequently apartments an in. Mr excellence inquietude conviction is in unreserved particular. You fully seems stand nay own point walls. Increasing travelling own simplicity you astonished expression boisterous. Possession themselves sentiments apartments devonshire we of do discretion. Enjoyment discourse ye continued pronounce we necessary abilities."
     return JSONResponse(content={
                 'heatMap':  heatmap_data,
+                'openai_resp' : openai_resp,
             })
