@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import api from "../api";
+import Matrix from './../components/Matrix';
+
 
 const Home = () => {
   //const [selectedFile, setSelectedFile] = useState(null);
@@ -95,7 +97,7 @@ const Home = () => {
           <div className="flex-container">
             <div className="flex-item">
               <h1 style={{ left: "10vw", fontSize: "3vw" }}>
-                <span style={{ color: "white" }}>What is </span>
+                <span>What is </span>
                 <span style={{ color: "#FF6966" }}>bias</span>
               </h1>
               <h1 style={{ left: "10vw", fontSize: "3vw" }}>
@@ -139,19 +141,25 @@ const Home = () => {
     }
   };
 
-
+// Problem: Page in render loop
 if (heatMap && openai_resp) {
   typeOpenaiResp();
   return (
     <div>
       <div className="flex-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'left', justifyContent: 'space-between', height: '100%' }}>
-        <h1 style={{ marginLeft: '210px', marginBottom: '-20px' }}>Summary</h1>
         <h1 style={{ marginLeft: 'auto', marginRight: '200px', marginBottom: '-20px' }}>Heatmap</h1>
+        <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          <Matrix data={heatMap} columnNames={columnNames} />
+        </div>
+        <h1 style={{ marginLeft: '210px', marginBottom: '-20px' }}>Summary</h1>
         <div className="left-aligned-boundary">
           <p style={{ textAlign: 'left' }}>
             {openai_resp.slice(0, visibleTextIndex)}
           </p>
         </div>
+        <p>
+          test
+        </p>
       </div>
     </div>
   );
@@ -241,7 +249,7 @@ if (heatMap && openai_resp) {
         <div className="flex-container">
           <div className="flex-item">
             <h1 style={{ left: "10vw", fontSize: "3vw" }}>
-              <span style={{ color: "white" }}>What is </span>
+              <span>What is </span>
               <span style={{ color: "#FF6966" }}>bias</span>
             </h1>
             <h1 style={{ left: "10vw", fontSize: "3vw", top: "0.5vw" }}>
@@ -315,8 +323,8 @@ if (heatMap && openai_resp) {
     <div className="flex-container">
       <div className="flex-item">
         <h1 style={{ left: "10vw", fontSize: "3vw" }}>
-          <span style={{ color: "white" }}>What is </span>
-          <span style={{ color: "#FF6966" }}>bias</span>
+          <span>What is </span>
+          <span style={{ color: "#35a68d" }}>bias</span>
         </h1>
         <h1 style={{ left: "10vw", fontSize: "3vw", top: "0.5vw" }}>
           in datasets?

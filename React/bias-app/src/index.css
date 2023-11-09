@@ -1,5 +1,5 @@
 body {
-  background: #556271;
+  background: #ffffff;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -17,6 +17,9 @@ code {
   padding: 0 10rem 0 10rem;
 }
 
+* {
+  color: black;
+}
 .dropZone {
   position: relative;
   left: 1vw;
@@ -26,19 +29,19 @@ code {
   align-items: center;
   width: 40vw;
   height: 60vh;
-  border: 1px dashed #ffffff8a;
+  border: 3px dashed #0000008a;
   background: rgba(217, 217, 217, 0.00);
   padding: 20px;
   flex-shrink:0;
   transition: border 0.3s;
   &:hover {
-    border: 1px dashed #ffffff; /* Change background color on hover */
+    border: 3px dashed #35a68d; /* Change background color on hover */
     /* color: #fff; /* Change text color on hover */
   }
 }
 
 p {
-  color: #FFF;
+  /* color: #FFF; */
   text-align: center;
   font-family: Inter;
   font-size: 1.3vw;
@@ -51,7 +54,7 @@ h1 {
   position: relative;
   left: 1vw;
   top: 2vw;
-  color: #FFF;
+  /* color: #FFF; */
   font-family: Inter;
   font-size: 2vw;
   font-style: normal;
@@ -67,7 +70,7 @@ h2 {
   left: 1vw;
   font-family: Inter;
   font-size: 1.2vw;
-  color: #FFF;
+  /* color: #FFF; */
 }
 
 .uploadButton {
@@ -80,10 +83,11 @@ h2 {
   border-radius: 10px;
   font-size: 1.6vw;
   color: #000;
+  background-color: #77fbaf;
 
   &:hover {
-    background-color: #ff6865; /* Change background color on hover */
-    color: #fff; /* Change text color on hover */
+    background-color: #35a68d; /* Change background color on hover */
+    /* color: #fff; Change text color on hover */
   }
 }
 
@@ -99,7 +103,7 @@ h2 {
   color: #000;
 
   &:hover {
-    background-color: #ff6865; /* Change background color on hover */
+    background-color: #35a68d; /* Change background color on hover */
     color: #fff; /* Change text color on hover */
   }
 }
