@@ -6,7 +6,6 @@ const FileUploadArea = ({
   onDragOver,
   onDrop,
   files,
-  onRemoveFiles,
   inputref,
   HandleUpload,
   isEditingButtonVisible,
