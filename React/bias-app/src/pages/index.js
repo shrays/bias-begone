@@ -218,16 +218,25 @@ const Home = () => {
   // jsx
   return (
     <div className="flex-container">
-      <div className="flex-item">
+      <div className="flex-left">
         <h1 style={{ left: "10vw", fontSize: "2.5vw" }}>
           <span>What is </span>
           <span style={{ color: "#35a68d" }}>bias</span>
         </h1>
-        <h1 style={{ left: "10vw", fontSize: "2.5vw", top: "2px" }}>
-          in datasets?
+        <h1 style={{ left: "10vw", fontSize: "2vw", top: "2px" }}>
+          in machine learning?
         </h1>
+        <div className="justified">
+          Bias in machine learning happens when the algorithms or data used to
+          train models unfairly favor some groups or outcomes over others. This
+          usually means the data isn't showing the full picture or the model
+          acts in a way that's not even-handed. As a result, this can lead to
+          unfair treatment for certain people or groups, causing uneven and
+          possibly unjust outcomes.
+        </div>
+        <button className="textButton">Learn more</button>
       </div>
-      <div className="flex-item">
+      <div className="flex-right">
         <FileUploadArea
           onFilesSelected={handleFileSelection}
           onDragOver={handleDragOver}

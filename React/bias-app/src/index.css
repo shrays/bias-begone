@@ -119,9 +119,39 @@ h2 {
   justify-content: space-between; /* Adjust as needed */
 }
 
-.flex-item {
-  flex: 1; /* Allows items to grow equally */
-  padding: 10px; /* Example padding */
+.flex-left {
+  flex: 2; /* Allows items to grow equally */
+  padding: 0px;
   border: 0px;
   /* border: 1px solid #ccc; Example border */
+}
+
+.flex-right {
+  flex: 3; /* Allows items to grow equally */
+  padding-left: 5%;
+  border: 0px;
+  /* border: 1px solid #ccc; Example border */
+}
+
+.justified {
+  text-align: left;
+  margin-left: 10vw;
+  font-size: 1.3vw;
+  padding-right: 10%;
+}
+
+.textButton {
+  background-color: transparent; /* Makes the background transparent */
+  border: none; /* Removes the border */
+  color: #000000; /* Sets the initial color of the button text */
+  text-decoration: underline; /* Underlines the text */
+  font-size: 1.3vw;
+  cursor: pointer; /* Changes the cursor to signify it's clickable */
+  transition: color 0.3s; /* Smooth color transition for hover effect */
+  padding-top: 15px;
+  margin-left: 9.5vw;
+
+  &:hover {
+    color: #35a68d; /* Change text color on hover */
+  }
 }
