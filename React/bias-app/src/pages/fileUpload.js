@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import PropTypes from "prop-types";
 
 const FileUploadArea = ({
@@ -7,6 +7,13 @@ const FileUploadArea = ({
   onDrop,
   files,
   onRemoveFiles,
+  inputref,
+  HandleUpload,
+  isEditingButtonVisible,
+  setIsEditingColumnNames,
+  setFiles,
+  Start,
+  setIsEditingButtonVisible,
 }) => {
   return (
     <div className="flex-item">

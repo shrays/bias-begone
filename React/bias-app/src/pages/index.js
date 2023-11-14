@@ -383,7 +383,7 @@ const Home = () => {
       );
     }
   }
-  // UI before file upload
+  // UI
   return (
     <div className="flex-container">
       <div className="flex-item">
@@ -396,47 +396,19 @@ const Home = () => {
         </h1>
       </div>
       <div className="flex-item">
-        <h1>Upload File</h1>
-        <h2>
-          Start detecting the bias in your dataset by uploading your csv file
-        </h2>
-        {/* <>
-          {!files && (
-            <div
-              className="dropZone"
-              onDragOver={handleDragOver}
-              onDrop={handleDrop}
-            >
-              <img
-                src={require("../Assets/upload.png")}
-                style={{ width: "5vw", height: "5vw", marginBottom: "2vw" }}
-              />
-              <p> Drag and drop files to upload </p>
-              <p style={{ fontSize: "1.3vw" }}>OR</p>
-              <input
-                className="uploadButton"
-                type="file"
-                multiple
-                onChange={(event) => handleFileSelection(event.target.files)}
-                hidden
-                ref={inputref}
-              />
-              <button
-                className="uploadButton"
-                onClick={() => inputref.current.click()}
-              >
-                {" "}
-                Browse Files{" "}
-              </button>
-            </div>
-          )}
-        </> */}
         <FileUploadArea
           onFilesSelected={handleFileSelection}
           onDragOver={handleDragOver}
           onDrop={handleDrop}
           files={files}
           onRemoveFiles={() => setFiles(null)}
+          inputref={inputref}
+          HandleUpload={HandleUpload}
+          isEditingButtonVisible={isEditingButtonVisible}
+          setIsEditingColumnNames={setIsEditingColumnNames}
+          setFiles={setFiles}
+          Start={Start}
+          setIsEditingButtonVisible={setIsEditingButtonVisible}
         />
       </div>
     </div>
