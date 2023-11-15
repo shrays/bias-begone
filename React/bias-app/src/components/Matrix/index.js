@@ -5,7 +5,6 @@ const truncateText = (text, maxLength) => {
     return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
 };
 
-
 const Matrix = ({ data, columnNames }) => {
   const d3Container = useRef(null);
 
@@ -32,6 +31,12 @@ const Matrix = ({ data, columnNames }) => {
                         .interpolator(d3.interpolateRdBu)
                         .domain([1, 0, -1]);
 
+      const handleCellClick = (rowIndex, colIndex) => {
+        const xColumnName = columnNames[colIndex];
+        const yColumnName = columnNames[rowIndex];
+        console.log(`Clicked cell: X Column - ${xColumnName}, Y Column - ${yColumnName}`);
+      };
+
       svg.selectAll('rect')
          .data(data.flat())
          .enter()
@@ -40,7 +45,12 @@ const Matrix = ({ data, columnNames }) => {
          .attr("y", (d, i) => xScale(Math.floor(i / data.length)))
          .attr("width", xScale.bandwidth())
          .attr("height", xScale.bandwidth())
-         .style("fill", d => myColor(d));
+         .style("fill", d => myColor(d))
+         .on("click", function(event, d) {
+            const rowIndex = Math.floor(data.flat().indexOf(d) / data.length);
+            const colIndex = data.flat().indexOf(d) % data.length;
+            handleCellClick(rowIndex, colIndex);
+         });
 
       svg.selectAll('text.value')
          .data(data.flat())
@@ -53,7 +63,12 @@ const Matrix = ({ data, columnNames }) => {
          .attr("text-anchor", "middle")
          .attr("dy", ".35em")
          .style("fill", d => Math.abs(d) > 0.5 ? "white" : "black")
-         .style("font-size", "10px");
+         .style("font-size", "10px")
+         .on("click", function(event, d) {
+            const rowIndex = Math.floor(data.flat().indexOf(d) / data.length);
+            const colIndex = data.flat().indexOf(d) % data.length;
+            handleCellClick(rowIndex, colIndex);
+         });
 
       svg.selectAll('text.colname')
       .data(columnNames)
