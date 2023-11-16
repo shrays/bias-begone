@@ -1,15 +1,15 @@
 body {
   background: #ffffff;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -30,9 +30,9 @@ code {
   width: 40vw;
   height: 60vh;
   border: 3px dashed #0000008a;
-  background: rgba(217, 217, 217, 0.00);
+  background: rgba(217, 217, 217, 0);
   padding: 20px;
-  flex-shrink:0;
+  flex-shrink: 0;
   transition: border 0.3s;
   &:hover {
     border: 3px dashed #35a68d; /* Change background color on hover */
@@ -109,8 +109,8 @@ h2 {
 }
 
 @font-face {
-  font-family: 'Inter';
-  src: url('Fonts/Inter.ttf') format('truetype');
+  font-family: "Inter";
+  src: url("Fonts/Inter.ttf") format("truetype");
   /* Add other font properties if needed */
 }
 
@@ -119,9 +119,49 @@ h2 {
   justify-content: space-between; /* Adjust as needed */
 }
 
-.flex-item {
+.flex-left {
+  flex: 1;
+  flex-wrap: nowrap;
+  padding-right: 2%;
+  border: 0px;
+  max-width: 1200px; /* Max container width */
+  margin: 0 auto; /* Center the container */
+}
+
+.flex-right {
   flex: 1; /* Allows items to grow equally */
-  padding: 10px; /* Example padding */
+  padding-left: 5%;
   border: 0px;
   /* border: 1px solid #ccc; Example border */
+}
+
+@media (min-width: 768px) {
+  .flex-left,
+  .flex-right {
+    padding: 0 20px; /* Add padding on larger screens */
+  }
+}
+
+.justified {
+  text-align: left;
+  margin-left: 10vw;
+  font-size: 1.3vw;
+  padding-right: 10%;
+  margin-top: 1vw;
+}
+
+.textButton {
+  background-color: transparent; /* Makes the background transparent */
+  border: none; /* Removes the border */
+  color: #000000; /* Sets the initial color of the button text */
+  text-decoration: underline; /* Underlines the text */
+  font-size: 1.3vw;
+  cursor: pointer; /* Changes the cursor to signify it's clickable */
+  transition: color 0.3s; /* Smooth color transition for hover effect */
+  padding-top: 15px;
+  margin-left: 9.5vw;
+
+  &:hover {
+    color: #35a68d; /* Change text color on hover */
+  }
 }
