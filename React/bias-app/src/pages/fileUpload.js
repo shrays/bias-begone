@@ -17,7 +17,7 @@ const FileUploadArea = ({
   return (
     <div className="flex-item">
       <h1>Upload File</h1>
-      <h2>
+      <h2 style={{ marginTop: "1rem" }}>
         Start detecting the bias in your dataset by uploading your csv file
       </h2>
       <div className="dropZone" onDragOver={onDragOver} onDrop={onDrop}>

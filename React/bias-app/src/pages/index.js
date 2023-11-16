@@ -93,40 +93,6 @@ const Home = () => {
       } else {
         // Display an error message for non-CSV files
         alert("Please drop a CSV file.");
-
-        // or change the UI --> this is not working
-        //return (
-        <div className="flex-container">
-          <div className="flex-item">
-            <h1 style={{ left: "10vw", fontSize: "3vw" }}>
-              <span>What is </span>
-              <span style={{ color: "#FF6966" }}>bias</span>
-            </h1>
-            <h1 style={{ left: "10vw", fontSize: "3vw" }}>in datasets?</h1>
-          </div>
-          <div className="flex-item">
-            <h1>Upload File</h1>
-            <h2>
-              Start detecting the bias in your dataset by uploading your csv
-              file
-            </h2>
-            <div className="dropZone">
-              <img
-                src={require("../Assets/wrong_file.png")}
-                style={{ width: "5vw", height: "5vw", marginBottom: "2vw" }}
-              />
-              <p> Please upload a .csv file! </p>
-              <button
-                className="smallButton"
-                onClick={() => setFiles(null)}
-                style={{ marginRight: "1vw" }}
-              >
-                Ok
-              </button>
-            </div>
-          </div>
-        </div>;
-        //);
       }
     }
   };
@@ -215,15 +181,27 @@ const Home = () => {
     setIsEditingFormVisible(false);
   };
 
+  // Function to redirect to learn more page
+  function redirect() {
+    window.location.href = "/about";
+  }
+
   // jsx
   return (
     <div className="flex-container">
       <div className="flex-left">
-        <h1 style={{ left: "10vw", fontSize: "2.5vw" }}>
+        <h1 style={{ left: "10vw" }}>
           <span>What is </span>
           <span style={{ color: "#35a68d" }}>bias</span>
         </h1>
-        <h1 style={{ left: "10vw", fontSize: "2vw", top: "2px" }}>
+        <h1
+          style={{
+            left: "10vw",
+            fontSize: "1.7vw",
+            top: "1rem",
+            flexWrap: "nowrap",
+          }}
+        >
           in machine learning?
         </h1>
         <div className="justified">
@@ -234,7 +212,9 @@ const Home = () => {
           unfair treatment for certain people or groups, causing uneven and
           possibly unjust outcomes.
         </div>
-        <button className="textButton">Learn more</button>
+        <button className="textButton" onClick={redirect}>
+          Learn more
+        </button>
       </div>
       <div className="flex-right">
         <FileUploadArea

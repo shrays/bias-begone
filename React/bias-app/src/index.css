@@ -120,17 +120,26 @@ h2 {
 }
 
 .flex-left {
-  flex: 2; /* Allows items to grow equally */
-  padding: 0px;
+  flex: 1;
+  flex-wrap: nowrap;
+  padding-right: 2%;
+  border: 0px;
+  max-width: 1200px; /* Max container width */
+  margin: 0 auto; /* Center the container */
+}
+
+.flex-right {
+  flex: 1; /* Allows items to grow equally */
+  padding-left: 5%;
   border: 0px;
   /* border: 1px solid #ccc; Example border */
 }
 
-.flex-right {
-  flex: 3; /* Allows items to grow equally */
-  padding-left: 5%;
-  border: 0px;
-  /* border: 1px solid #ccc; Example border */
+@media (min-width: 768px) {
+  .flex-left,
+  .flex-right {
+    padding: 0 20px; /* Add padding on larger screens */
+  }
 }
 
 .justified {
@@ -138,6 +147,7 @@ h2 {
   margin-left: 10vw;
   font-size: 1.3vw;
   padding-right: 10%;
+  margin-top: 1vw;
 }
 
 .textButton {
