@@ -187,53 +187,56 @@ const Home = () => {
   }
 
   // jsx
-  return (
-    <div className="flex-container">
-      <div className="flex-left">
-        <h1 style={{ left: "10vw" }}>
-          <span>What is </span>
-          <span style={{ color: "#35a68d" }}>bias</span>
-        </h1>
-        <h1
-          style={{
-            left: "10vw",
-            fontSize: "1.7vw",
-            top: "1rem",
-            flexWrap: "nowrap",
-          }}
-        >
-          in machine learning?
-        </h1>
-        <div className="justified">
-          Bias in machine learning happens when the algorithms or data used to
-          train models unfairly favor some groups or outcomes over others. This
-          usually means the data isn't showing the full picture or the model
-          acts in a way that's not even-handed. As a result, this can lead to
-          unfair treatment for certain people or groups, causing uneven and
-          possibly unjust outcomes.
+  if (!isEditingColumnNames) {
+    return (
+      <div className="flex-container">
+        <div className="flex-left">
+          <h1 style={{ left: "10vw" }}>
+            <span>What is </span>
+            <span style={{ color: "#35a68d" }}>bias</span>
+          </h1>
+          <h1
+            style={{
+              left: "10vw",
+              fontSize: "1.7vw",
+              top: "1rem",
+              flexWrap: "nowrap",
+            }}
+          >
+            in machine learning?
+          </h1>
+          <div className="justified">
+            Bias in machine learning happens when the algorithms or data used to
+            train models unfairly favor some groups or outcomes over others.
+            This usually means the data isn't showing the full picture or the
+            model acts in a way that's not even-handed. As a result, this can
+            lead to unfair treatment for certain people or groups, causing
+            uneven and possibly unjust outcomes.
+          </div>
+          <button className="textButton" onClick={redirect}>
+            Learn more
+          </button>
         </div>
-        <button className="textButton" onClick={redirect}>
-          Learn more
-        </button>
+        <div className="flex-right">
+          <FileUploadArea
+            onFilesSelected={handleFileSelection}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+            files={files}
+            onRemoveFiles={() => setFiles(null)}
+            inputref={inputref}
+            HandleUpload={HandleUpload}
+            isEditingButtonVisible={isEditingButtonVisible}
+            setIsEditingColumnNames={setIsEditingColumnNames}
+            setFiles={setFiles}
+            Start={Start}
+            setIsEditingButtonVisible={setIsEditingButtonVisible}
+          />
+        </div>
       </div>
-      <div className="flex-right">
-        <FileUploadArea
-          onFilesSelected={handleFileSelection}
-          onDragOver={handleDragOver}
-          onDrop={handleDrop}
-          files={files}
-          onRemoveFiles={() => setFiles(null)}
-          inputref={inputref}
-          HandleUpload={HandleUpload}
-          isEditingButtonVisible={isEditingButtonVisible}
-          setIsEditingColumnNames={setIsEditingColumnNames}
-          setFiles={setFiles}
-          Start={Start}
-          setIsEditingButtonVisible={setIsEditingButtonVisible}
-        />
-      </div>
-    </div>
-  );
+    );
+  } else {
+  }
 };
 
 export default Home;
