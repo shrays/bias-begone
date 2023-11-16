@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import api from "../api";
 import Matrix from "./../components/Matrix";
-import FileUploadArea from "./fileUpload";
+import FileUploadArea from "./fileUpload.js";
 
 const Home = () => {
   //const [selectedFile, setSelectedFile] = useState(null);
@@ -236,6 +236,85 @@ const Home = () => {
       </div>
     );
   } else {
+    {
+      return (
+        <div
+          className="flex-container"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "space-between",
+            height: "100%",
+          }}
+        >
+          <div className="flex-item">
+            <h1>Edit Column Names</h1>
+            <div
+              style={{
+                color: "white",
+                display: "flex",
+                justifyContent: "space-between",
+                marginBottom: "10px",
+              }}
+            >
+              <div style={{ flex: 1 }}>
+                <label>Current Names</label>
+              </div>
+              <div style={{ flex: 1 }}>
+                <label>Enter New Names</label>
+              </div>
+            </div>
+            <div style={{ color: "white", marginBottom: "10px" }}>
+              {columnNames.map((name, index) => (
+                <div
+                  key={index}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginBottom: "10px",
+                  }}
+                >
+                  <label style={{ flex: 1, marginRight: "10px" }}>
+                    {name}:
+                  </label>
+                  <input
+                    type="text"
+                    value={null}
+                    onChange={(e) =>
+                      handleEditColumnName(index, e.target.value)
+                    }
+                    style={{ flex: 1 }}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div
+            className="actions"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginBottom: "10px",
+            }}
+          >
+            <button
+              className="smallButton"
+              onClick={() => setIsEditingColumnNames(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className="smallButton"
+              onClick={handleSaveColumnNames}
+              style={{ width: "170px", marginLeft: "10px" }}
+            >
+              Save Column Names
+            </button>
+          </div>
+        </div>
+      );
+    }
   }
 };
 
