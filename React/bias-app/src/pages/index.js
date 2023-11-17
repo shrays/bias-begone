@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import api from "../api";
-import Matrix from "./../components/Matrix";
-import FileUploadArea from "./fileUpload.js";
+import FileUploadArea from "../components/fileUpload";
+import * as d3 from "d3";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   //const [selectedFile, setSelectedFile] = useState(null);
@@ -13,9 +14,10 @@ const Home = () => {
   const [editedColumnNames, setEditedColumnNames] = useState([...columnNames]);
   const [isEditingButtonVisible, setIsEditingButtonVisible] = useState(false);
   const [isEditingFormVisible, setIsEditingFormVisible] = useState(false);
-  const [visibleTextIndex, setVisibleTextIndex] = useState(0);
+  //const [visibleTextIndex, setVisibleTextIndex] = useState(0);
   const [files, setFiles] = useState(null);
   const inputref = useRef();
+  const navigate = useNavigate();
 
   const HandleUpload = async (event) => {
     if (files) {
@@ -48,7 +50,7 @@ const Home = () => {
   };
 
   // Start
-  const Start = async (event) => {
+  const Start = async (columnNames, onSuccess, onError) => {
     try {
       const data = { columnNames };
 
@@ -56,17 +58,45 @@ const Home = () => {
       if (response.status === 200) {
         // HeatMap Data is received here
         const { heatMap, openai_resp } = response.data;
-        if (heatMap) {
-          setopenai_resp(openai_resp);
-          setHeatMap(heatMap);
-          console.log(heatMap);
-        }
         console.log("New column names successfully sent");
+
+        if (heatMap && typeof onSuccess === "function") {
+          onSuccess(heatMap, openai_resp);
+        }
       } else {
         console.error("New column names not sent:", response.data);
       }
     } catch (error) {
       console.error("New column names not sent:", error);
+      if (typeof onError === "function") {
+        onError(error);
+      }
+    }
+  };
+
+  // function to handle start button click
+  const HandleStart = async (event) => {
+    console.log("Handle start");
+    try {
+      await Start(
+        columnNames,
+        (heatMap, openai_resp) => {
+          setopenai_resp(openai_resp);
+          setHeatMap(heatMap);
+          navigate("/linear", {
+            state: {
+              openai_resp,
+              heatMap,
+              columnNames,
+            },
+          });
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+    } catch (error) {
+      console.error("Failed to start:", error);
     }
   };
 
@@ -97,57 +127,8 @@ const Home = () => {
     }
   };
 
-  const typeOpenaiResp = () => {
-    const text = openai_resp;
-
-    if (visibleTextIndex < text.length) {
-      setTimeout(() => {
-        setVisibleTextIndex(visibleTextIndex + 1);
-      }, 50); // Reduce the delay for a faster animation
-    }
-  };
-
-  // Problem: Page in render loop
-  if (heatMap && openai_resp) {
-    typeOpenaiResp();
-    return (
-      <div>
-        <div
-          className="flex-container"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "left",
-            justifyContent: "space-between",
-            height: "100%",
-          }}
-        >
-          <h1
-            style={{
-              marginLeft: "auto",
-              marginRight: "200px",
-              marginBottom: "-20px",
-            }}
-          >
-            Heatmap
-          </h1>
-          <div
-            style={{ width: "100%", display: "flex", justifyContent: "center" }}
-          >
-            <Matrix data={heatMap} columnNames={columnNames} />
-          </div>
-          <h1 style={{ marginLeft: "210px", marginBottom: "-20px" }}>
-            Summary
-          </h1>
-          <div className="left-aligned-boundary">
-            <p style={{ textAlign: "left" }}>
-              {openai_resp.slice(0, visibleTextIndex)}
-            </p>
-          </div>
-          <p>test</p>
-        </div>
-      </div>
-    );
+  function createScatterPlot(data) {
+    const svg = d3.select("body").append("svg");
   }
 
   // handle file selection
@@ -183,7 +164,7 @@ const Home = () => {
 
   // Function to redirect to learn more page
   function redirect() {
-    window.location.href = "/about";
+    navigate("/about");
   }
 
   // jsx
@@ -229,7 +210,7 @@ const Home = () => {
             isEditingButtonVisible={isEditingButtonVisible}
             setIsEditingColumnNames={setIsEditingColumnNames}
             setFiles={setFiles}
-            Start={Start}
+            HandleStart={HandleStart}
             setIsEditingButtonVisible={setIsEditingButtonVisible}
           />
         </div>
