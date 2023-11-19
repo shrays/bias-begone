@@ -59,7 +59,7 @@ h1 {
   font-size: 2vw;
   font-style: normal;
   font-weight: 700;
-  line-height: normal;
+  /* line-height: normal; */
   width: 302px;
   height: 62px;
   flex-shrink: 0;
@@ -164,4 +164,18 @@ h2 {
   &:hover {
     color: #35a68d; /* Change text color on hover */
   }
+}
+
+.linear-heading {
+  color: #000;
+  font-size: 2rem;
+  text-decoration: none;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  margin-left: 40%;
+}
+
+.linear-paragraph {
+  color: #000;
+  font-size: 1rem;
 }
