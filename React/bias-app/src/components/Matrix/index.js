@@ -5,7 +5,7 @@ const truncateText = (text, maxLength) => {
   return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
 };
 
-const Matrix = ({ data, columnNames }) => {
+const Matrix = ({ data, columnNames, onCellClick }) => {
   const d3Container = useRef(null);
   const [selectedData, setSelectedData] = useState({ xArray: [], yArray: [] });
 
@@ -38,9 +38,12 @@ const Matrix = ({ data, columnNames }) => {
       const handleCellClick = (rowIndex, colIndex) => {
         const xColumnName = columnNames[colIndex];
         const yColumnName = columnNames[rowIndex];
-        const xArray = data.map((row) => row[xColumnName]);
-        const yArray = data.map((row) => row[yColumnName]);
-        setSelectedData(xArray, yArray);
+        const xArray = data[rowIndex];
+        const yArray = data.map((row) => row[colIndex]);
+        // print xarray yarray
+        console.log(xArray);
+        console.log(yArray);
+        onCellClick(xArray, yArray);
         console.log(
           `Clicked cell: X Column - ${xColumnName}, Y Column - ${yColumnName}`
         );
@@ -55,17 +58,17 @@ const Matrix = ({ data, columnNames }) => {
           const id =
             "rect-" +
             (Math.floor(i / data.length) * data.length + (i % data.length));
-          console.log("rect id: " + id);
+          // console.log("rect id: " + id);
           return id;
         })
         .attr("x", (d, i) => {
           const xValue = xScale(i % data.length);
-          console.log("x for index", i, ":", xValue);
+          //console.log("x for index", i, ":", xValue);
           return xValue;
         })
         .attr("y", (d, i) => {
           const yValue = xScale(Math.floor(i / data.length));
-          console.log("y for index", i, ":", yValue);
+          //console.log("y for index", i, ":", yValue);
           return yValue;
         })
         .attr("width", xScale.bandwidth())
@@ -108,7 +111,7 @@ const Matrix = ({ data, columnNames }) => {
           // const rowIndex =
           //   Math.floor(data.flat().indexOf(d) / data.length) * data.length;
           // const colIndex = data.flat().indexOf(d) % data.length;
-          console.log("Hovering over text for rect ID:" + id);
+          //console.log("Hovering over text for rect ID:" + id);
           d3.select(id).style("fill", "#55CD9C");
         })
         .on("mouseout", function (event, d) {
