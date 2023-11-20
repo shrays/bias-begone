@@ -84,7 +84,7 @@ const FileUploadArea = ({
                       <button
                         className="smallButton"
                         onClick={() => setIsEditingColumnNames(true)}
-                        style={{ width: "170px" }}
+                        style={{ width: "200px" }}
                       >
                         Edit Column Names
                       </button>

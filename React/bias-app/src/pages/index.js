@@ -9,12 +9,12 @@ const Home = () => {
   const [uploadMessage, setUploadMessage] = useState("");
   const [columnNames, setColumnNames] = useState([]);
   const [heatMap, setHeatMap] = useState([]); // heatmap data is a 2D list
-  const [openai_resp, setopenai_resp] = useState("");
+  const [summary, setSummary] = useState("");
+  const [tips, setTips] = useState("");
   const [isEditingColumnNames, setIsEditingColumnNames] = useState(false);
   const [editedColumnNames, setEditedColumnNames] = useState([...columnNames]);
   const [isEditingButtonVisible, setIsEditingButtonVisible] = useState(false);
   const [isEditingFormVisible, setIsEditingFormVisible] = useState(false);
-  //const [visibleTextIndex, setVisibleTextIndex] = useState(0);
   const [files, setFiles] = useState(null);
   const inputref = useRef();
   const navigate = useNavigate();
@@ -57,11 +57,11 @@ const Home = () => {
       const response = await api.post("/start/", data);
       if (response.status === 200) {
         // HeatMap Data is received here
-        const { heatMap, openai_resp } = response.data;
+        const { heatMap, summary, tips } = response.data;
         console.log("New column names successfully sent");
 
         if (heatMap && typeof onSuccess === "function") {
-          onSuccess(heatMap, openai_resp);
+          onSuccess(heatMap, summary, tips);
         }
       } else {
         console.error("New column names not sent:", response.data);
@@ -80,12 +80,14 @@ const Home = () => {
     try {
       await Start(
         columnNames,
-        (heatMap, openai_resp) => {
-          setopenai_resp(openai_resp);
+        (heatMap, summary, tips) => {
+          setSummary(summary);
+          setTips(tips);
           setHeatMap(heatMap);
           navigate("/linear", {
             state: {
-              openai_resp,
+              summary,
+              tips,
               heatMap,
               columnNames,
             },

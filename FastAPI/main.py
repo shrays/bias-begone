@@ -11,6 +11,7 @@ import io, models
 import pandas as pd
 from fastapi.responses import JSONResponse
 from matrix import construct_corr_from_df
+from chatgpt import get_resp
 
 app = FastAPI()
 origins = [
@@ -25,49 +26,11 @@ app.add_middleware(
     allow_headers = ['*']
 )
 
-class TransactionBase(BaseModel):
-
-    amount: float
-    category: str
-    description: str
-    is_income: bool
-    date: str
-
-class TransactionModel(TransactionBase):
-    id: int
-
-    class Config:
-        from_attributes = True
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 class ColumnData(BaseModel):
     columnNames: list
 
-db_dependency = Annotated[Session, Depends(get_db)]
-
 models.Base.metadata.create_all(bind=engine)
-
-# sending the data to the backend/ @app is the react application
-@app.post("/transactions/", response_model=TransactionModel)
-async def create_transaction(transaction: TransactionBase, db: db_dependency):
-    db_transaction = models.Transaction(**transaction.dict())
-    db.add(db_transaction)
-    db.commit()
-    db.refresh(db_transaction)
-    return db_transaction
-
-# sending data from the backend
-@app.get("/transactions/", response_model=List[TransactionModel])
-async def read_transactions(db:db_dependency, skip: int = 0, limit: int = 100): 
-    # Query Parameters to fetch certain amount of transactions
-    transactions = db.query(models.Transaction).offset(skip).limit(limit).all()
-    return transactions
 
 @app.post("/uploadFile/")
 async def upload_file(file: UploadFile = File(...)):
@@ -85,7 +48,7 @@ async def upload_file(file: UploadFile = File(...)):
 
             column_names = df.columns.tolist()
             column_data_types = df.dtypes.tolist()
-            print(column_data_types)
+            print("[log] csv file saved")
             return JSONResponse(content={
                 'columnNames': column_names,
                 'columnDataTypes': [str(dtype) for dtype in column_data_types],
@@ -106,11 +69,12 @@ async def start(data: ColumnData):
     df = pd.read_csv("file.csv")
     df.columns = column_names
     # dataframe with updated column names
-    print(df)
     heatmap_data = construct_corr_from_df(df)
-    print(heatmap_data)
-    openai_resp = "random text placeholder for now Announcing of invitation principles in. Cold in late or deal. Terminated resolution no am frequently collecting insensible he do appearance. Projection invitation affronting admiration if no on or. It as instrument boisterous frequently apartments an in. Mr excellence inquietude conviction is in unreserved particular. You fully seems stand nay own point walls. Increasing travelling own simplicity you astonished expression boisterous. Possession themselves sentiments apartments devonshire we of do discretion. Enjoyment discourse ye continued pronounce we necessary abilities."
+    print("[log] heatmap data generated")
+    summary, tips = get_resp(df)
+    print("[log] chatgpt response generated")
     return JSONResponse(content={
                 'heatMap':  heatmap_data,
-                'openai_resp' : openai_resp,
+                'summary' : summary,
+                'tips' : tips
             })

@@ -32,8 +32,13 @@ source env/bin/activate  # On Windows, use: .\env\Scripts\activate
 ```bash
 python3 setup_environment.py
 ```
+4. Set OpenAI API key
 
-4. Start the FastAPI server:
+```bash
+export OPENAI_API_KEY=your_api_key
+```
+
+5. Start the FastAPI server:
 
 ```bash
 uvicorn main:app --reload
