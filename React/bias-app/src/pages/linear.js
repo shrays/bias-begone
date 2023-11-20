@@ -30,15 +30,11 @@ const LinearCorrelation = () => {
     }
   };
 
-  useEffect(() => {
-    console.log("linear.js");
-    console.log(selectedData.xArray);
-    console.log(selectedData.yArray);
-  }, [selectedData]);
-
   // a callback function to render scatter plot after a cell is clicked
-  const renderScatterPlot = (xArray, yArray) => {
+  const renderScatterPlot = (xArray, yArray, xColumn, yColumn) => {
     setSelectedData({ xArray, yArray });
+    setSelectedColumn({ xColumn, yColumn });
+    console.log("selected columns: " + xColumn + " " + yColumn);
   };
 
   typeSummary();
@@ -72,7 +68,7 @@ const LinearCorrelation = () => {
         <div className="flex-right">
           <h1 style={{ textAlign: "center", margin: "0", width: "100%" }}>Scatter Plot</h1>
           <div>
-            <ScatterPlot data={selectedData} />
+            <ScatterPlot data={selectedData} columnNames={selectedColumn} />
           </div>
         </div>
       </div>

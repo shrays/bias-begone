@@ -8,6 +8,10 @@ const truncateText = (text, maxLength) => {
 const Matrix = ({ data, columnNames, onCellClick }) => {
   const d3Container = useRef(null);
   const [selectedData, setSelectedData] = useState({ xArray: [], yArray: [] });
+  const [selectedColumn, setSelectedColumn] = useState({
+    xColumn: "",
+    yColumn: "",
+  });
 
   useEffect(() => {
     if (data && columnNames && d3Container.current) {
@@ -41,9 +45,9 @@ const Matrix = ({ data, columnNames, onCellClick }) => {
         const xArray = data[rowIndex];
         const yArray = data.map((row) => row[colIndex]);
         // print xarray yarray
-        console.log(xArray);
-        console.log(yArray);
-        onCellClick(xArray, yArray);
+        //console.log(xArray);
+        //console.log(yArray);
+        onCellClick(xArray, yArray, xColumnName, yColumnName);
         console.log(
           `Clicked cell: X Column - ${xColumnName}, Y Column - ${yColumnName}`
         );
