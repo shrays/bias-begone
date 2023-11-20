@@ -5,16 +5,27 @@ import ScatterPlot from "../components/Scatterplot";
 
 const LinearCorrelation = () => {
   const location = useLocation();
-  const [visibleTextIndex, setVisibleTextIndex] = useState(0);
+  const [visibleSummaryIndex, setVisibleSummaryIndex] = useState(0);
+  const [visibleTipsIndex, setVisibleTipsIndex] = useState(0);
   const [selectedData, setSelectedData] = useState({ xArray: [], yArray: [] });
-  const { openai_resp, heatMap, columnNames } = location.state;
+  const { summary, tips, heatMap, columnNames } = location.state;
 
-  const typeOpenaiResp = () => {
-    const text = openai_resp;
+  const typeSummary = () => {
+    const text = summary;
 
-    if (visibleTextIndex < text.length) {
+    if (visibleSummaryIndex < text.length) {
       setTimeout(() => {
-        setVisibleTextIndex(visibleTextIndex + 1);
+        setVisibleSummaryIndex(visibleSummaryIndex + 1);
+      }, 50); // Reduce the delay for a faster animation
+    }
+  };
+
+  const typeTips = () => {
+    const text = tips;
+
+    if (visibleTipsIndex < text.length) {
+      setTimeout(() => {
+        setVisibleTipsIndex(visibleTipsIndex + 1);
       }, 50); // Reduce the delay for a faster animation
     }
   };
@@ -30,7 +41,8 @@ const LinearCorrelation = () => {
     setSelectedData({ xArray, yArray });
   };
 
-  typeOpenaiResp();
+  typeSummary();
+  typeTips();
   return (
     <div>
       <div
@@ -38,10 +50,11 @@ const LinearCorrelation = () => {
         style={{
           justifyContent: "space-between",
           height: "100%",
+          paddingBottom: "20px", // Add padding to create space below the container
         }}
       >
         <div className="flex-left">
-          <div className="linear-heading ">Heatmap</div>
+          <h1 style={{ textAlign: "center", margin: "0", width: "100%" }}>Heatmap</h1>
           <div
             style={{
               width: "100%",
@@ -57,21 +70,35 @@ const LinearCorrelation = () => {
           </div>
         </div>
         <div className="flex-right">
-          <div className="linear-heading">Scatter Plot</div>
+          <h1 style={{ textAlign: "center", margin: "0", width: "100%" }}>Scatter Plot</h1>
           <div>
             <ScatterPlot data={selectedData} />
           </div>
         </div>
       </div>
-      <h1 style={{ marginLeft: "210px", marginBottom: "-20px" }}>Summary</h1>
-      <div className="left-aligned-boundary">
-        <p style={{ textAlign: "left" }}>
-          {openai_resp.slice(0, visibleTextIndex)}
-        </p>
+  
+      <div
+        className="flex-container"
+        style={{
+          justifyContent: "space-between",
+          height: "100%",
+          paddingBottom: "20px", // Add padding to create space below the container
+        }}
+      >
+        <div className="flex-left">
+          <h1 style={{ textAlign: "center", margin: "0 0 10px 0", width: "100%" }}>Summary</h1>
+          <p style={{ textAlign: "left" }}>{summary.slice(0, visibleSummaryIndex)}</p>
+        </div>
+        <div className="flex-right">
+          <h1 style={{ textAlign: "center", margin: "0 0 10px 0", width: "100%" }}>Recommendations</h1>
+          <p style={{ textAlign: "left" }}>{tips.slice(0, visibleTipsIndex)}</p>
+        </div>
       </div>
-      <p>test</p>
     </div>
   );
+  
+  
+  
 };
 
 export default LinearCorrelation;

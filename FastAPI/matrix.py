@@ -5,7 +5,7 @@ from parseCSV import parser
 from sklearn import datasets
 import seaborn as sns
 import matplotlib.pyplot as plt
-from minepy import MINE
+# from minepy import MINE
 from sklearn.feature_selection import mutual_info_regression
 from sklearn.preprocessing import LabelEncoder
 
@@ -96,24 +96,24 @@ def nlc_Kendall(df):
     return corr_matrix_vals
 
 
-def calc_mic(x, y):
-    mine = MINE()
-    mine.compute_score(x, y)
-    return mine.mic()
+# def calc_mic(x, y):
+#     mine = MINE()
+#     mine.compute_score(x, y)
+#     return mine.mic()
 
-def nlc_mic(df):
-    df = _encode_strings(df)
-    df.fillna(df.median(), inplace=True)
+# def nlc_mic(df):
+#     df = _encode_strings(df)
+#     df.fillna(df.median(), inplace=True)
     
-    n_vars = df.shape[1]
+#     n_vars = df.shape[1]
     
-    mic_matrix = np.zeros((n_vars, n_vars))
+#     mic_matrix = np.zeros((n_vars, n_vars))
 
-    for i in range(n_vars):
-        for j in range(n_vars):
-            mic_matrix[i, j] = calc_mic(df.iloc[:, i], df.iloc[:, j])
+#     for i in range(n_vars):
+#         for j in range(n_vars):
+#             mic_matrix[i, j] = calc_mic(df.iloc[:, i], df.iloc[:, j])
     
-    return mic_matrix
+#     return mic_matrix
 
 # The following is for testing only
 # Assume getting list of column names 
@@ -127,9 +127,9 @@ data = [[6.479977165894608, 8.962109258923926, 7.10965498000782, 15.661746924918
 
 df = pd.DataFrame(data=data, columns=names )
 
-df = pd.read_csv('/Users/laithjas/Documents/Fall2023/capstone/LoanApproval.csv')
-#print(nlc_mutual_info(df, 'Loan_Status'))
-print(nlc_mic(df))
+# df = pd.read_csv('/Users/laithjas/Documents/Fall2023/capstone/LoanApproval.csv')
+# #print(nlc_mutual_info(df, 'Loan_Status'))
+# print(nlc_mic(df))
 
 # sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f", linewidths=.5)
 # plt.title("Correlation Heatmap")
