@@ -7,6 +7,10 @@ const LinearCorrelation = () => {
   const location = useLocation();
   const [visibleTextIndex, setVisibleTextIndex] = useState(0);
   const [selectedData, setSelectedData] = useState({ xArray: [], yArray: [] });
+  const [selectedColumn, setSelectedColumn] = useState({
+    xColumn: "",
+    yColumn: "",
+  });
   const { openai_resp, heatMap, columnNames } = location.state;
 
   const typeOpenaiResp = () => {
@@ -19,15 +23,11 @@ const LinearCorrelation = () => {
     }
   };
 
-  useEffect(() => {
-    console.log("linear.js");
-    console.log(selectedData.xArray);
-    console.log(selectedData.yArray);
-  }, [selectedData]);
-
   // a callback function to render scatter plot after a cell is clicked
-  const renderScatterPlot = (xArray, yArray) => {
+  const renderScatterPlot = (xArray, yArray, xColumn, yColumn) => {
     setSelectedData({ xArray, yArray });
+    setSelectedColumn({ xColumn, yColumn });
+    console.log("selected columns: " + xColumn + " " + yColumn);
   };
 
   typeOpenaiResp();
@@ -59,7 +59,7 @@ const LinearCorrelation = () => {
         <div className="flex-right">
           <div className="linear-heading">Scatter Plot</div>
           <div>
-            <ScatterPlot data={selectedData} />
+            <ScatterPlot data={selectedData} columnNames={selectedColumn} />
           </div>
         </div>
       </div>
