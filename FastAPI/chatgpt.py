@@ -4,8 +4,7 @@ import pandas as pd
 client = OpenAI()
 
 def get_resp(df):
-    
-  file_content = df.to_string(index=False)
+  file_content = df[:50].to_string(index=False)
 
   response = client.chat.completions.create(
     model="gpt-3.5-turbo",
