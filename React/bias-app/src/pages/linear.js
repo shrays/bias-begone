@@ -8,6 +8,10 @@ const LinearCorrelation = () => {
   const [visibleSummaryIndex, setVisibleSummaryIndex] = useState(0);
   const [visibleTipsIndex, setVisibleTipsIndex] = useState(0);
   const [selectedData, setSelectedData] = useState({ xArray: [], yArray: [] });
+  const [selectedColumn, setSelectedColumn] = useState({
+    xColumn: "",
+    yColumn: "",
+  });
   const { summary, tips, heatMap, columnNames } = location.state;
 
   const typeSummary = () => {
@@ -50,7 +54,9 @@ const LinearCorrelation = () => {
         }}
       >
         <div className="flex-left">
-          <h1 style={{ textAlign: "center", margin: "0", width: "100%" }}>Heatmap</h1>
+          <h1 style={{ textAlign: "center", margin: "0", width: "100%" }}>
+            Heatmap
+          </h1>
           <div
             style={{
               width: "100%",
@@ -66,13 +72,15 @@ const LinearCorrelation = () => {
           </div>
         </div>
         <div className="flex-right">
-          <h1 style={{ textAlign: "center", margin: "0", width: "100%" }}>Scatter Plot</h1>
+          <h1 style={{ textAlign: "center", margin: "0", width: "100%" }}>
+            Scatter Plot
+          </h1>
           <div>
             <ScatterPlot data={selectedData} columnNames={selectedColumn} />
           </div>
         </div>
       </div>
-  
+
       <div
         className="flex-container"
         style={{
@@ -82,19 +90,26 @@ const LinearCorrelation = () => {
         }}
       >
         <div className="flex-left">
-          <h1 style={{ textAlign: "center", margin: "0 0 10px 0", width: "100%" }}>Summary</h1>
-          <p style={{ textAlign: "left" }}>{summary.slice(0, visibleSummaryIndex)}</p>
+          <h1
+            style={{ textAlign: "center", margin: "0 0 10px 0", width: "100%" }}
+          >
+            Summary
+          </h1>
+          <p style={{ textAlign: "left" }}>
+            {summary.slice(0, visibleSummaryIndex)}
+          </p>
         </div>
         <div className="flex-right">
-          <h1 style={{ textAlign: "center", margin: "0 0 10px 0", width: "100%" }}>Recommendations</h1>
+          <h1
+            style={{ textAlign: "center", margin: "0 0 10px 0", width: "100%" }}
+          >
+            Recommendations
+          </h1>
           <p style={{ textAlign: "left" }}>{tips.slice(0, visibleTipsIndex)}</p>
         </div>
       </div>
     </div>
   );
-  
-  
-  
 };
 
 export default LinearCorrelation;
