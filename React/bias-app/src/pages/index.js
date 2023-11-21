@@ -3,6 +3,7 @@ import api from "../api";
 import FileUploadArea from "../components/fileUpload";
 import * as d3 from "d3";
 import { useNavigate } from "react-router-dom";
+import LoadingComponent from "../components/loading";
 
 const Home = () => {
   //const [selectedFile, setSelectedFile] = useState(null);
@@ -18,6 +19,7 @@ const Home = () => {
   const [files, setFiles] = useState(null);
   const inputref = useRef();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const HandleUpload = async (event) => {
     if (files) {
@@ -53,7 +55,6 @@ const Home = () => {
   const Start = async (columnNames, onSuccess, onError) => {
     try {
       const data = { columnNames };
-
       const response = await api.post("/start/", data);
       if (response.status === 200) {
         // HeatMap Data is received here
@@ -77,10 +78,13 @@ const Home = () => {
   // function to handle start button click
   const HandleStart = async (event) => {
     console.log("Handle start");
+    setLoading(true);
+    console.log(loading);
     try {
       await Start(
         columnNames,
         (heatMap, summary, tips) => {
+          setLoading(false);
           setSummary(summary);
           setTips(tips);
           setHeatMap(heatMap);
@@ -99,6 +103,8 @@ const Home = () => {
       );
     } catch (error) {
       console.error("Failed to start:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -170,6 +176,9 @@ const Home = () => {
   }
 
   // jsx
+  if (loading) {
+    return <LoadingComponent loading={loading} />;
+  }
   if (!isEditingColumnNames) {
     return (
       <div className="flex-container">
