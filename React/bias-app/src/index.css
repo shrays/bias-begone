@@ -108,6 +108,23 @@ h2 {
   }
 }
 
+.cancelButton {
+  width: 5vw;
+  height: 2vw;
+  flex-shrink: 0;
+  fill: #fff;
+  border: none;
+  transition: background-color 0.3s, color 0.3s;
+  border-radius: 5px;
+  font-size: 1vw;
+  color: #000;
+
+  &:hover {
+    background-color: #ff6966; /* Change background color on hover */
+    color: #fff; /* Change text color on hover */
+  }
+}
+
 @font-face {
   font-family: "Inter";
   src: url("Fonts/Inter.ttf") format("truetype");
@@ -153,7 +170,7 @@ h2 {
 .textButton {
   background-color: transparent; /* Makes the background transparent */
   border: none; /* Removes the border */
-  color: #000000; /* Sets the initial color of the button text */
+  color: grey; /* Sets the initial color of the button text */
   text-decoration: underline; /* Underlines the text */
   font-size: 1.3vw;
   cursor: pointer; /* Changes the cursor to signify it's clickable */

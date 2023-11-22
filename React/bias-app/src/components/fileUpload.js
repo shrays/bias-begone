@@ -26,10 +26,10 @@ const FileUploadArea = ({
           <>
             <img
               src={require("../Assets/upload.png")}
-              style={{ width: "5vw", height: "5vw", marginBottom: "2vw" }}
+              style={{ width: "5vw", height: "5vw", marginBottom: "2rem" }}
             />
             <p> Drag and drop files to upload </p>
-            <p style={{ fontSize: "1.3vw" }}>OR</p>
+            <p style={{ fontSize: "1rem" }}>OR</p>
             <input
               className="uploadButton"
               type="file"
@@ -39,7 +39,8 @@ const FileUploadArea = ({
               ref={inputref}
             />
             <button
-              className="uploadButton"
+              className="smallButton"
+              style={{ width: "145px", height: "35px" }}
               onClick={() => inputref.current.click()}
             >
               Browse Files
@@ -56,60 +57,76 @@ const FileUploadArea = ({
               <p key={idx}>{file.name}</p>
             ))}
             <div className="actions">
-              <div style={{ marginTop: "8px" }}>
-                <button
-                  className="smallButton"
-                  onClick={() => {
-                    setFiles(null);
-                    setIsEditingButtonVisible(false);
-                  }}
-                  style={{ marginRight: "1vw" }}
-                >
-                  Cancel
-                </button>
-                <button className="smallButton" onClick={HandleUpload}>
-                  Upload
-                </button>
-              </div>
-              <div style={{ marginTop: "10px" }}>
-                {isEditingButtonVisible ? (
-                  <div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                      }}
+              {isEditingButtonVisible ? (
+                <div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
+                    <button
+                      className="smallButton"
+                      onClick={() => setIsEditingColumnNames(true)}
+                      style={{ width: "200px" }}
                     >
-                      <button
-                        className="smallButton"
-                        onClick={() => setIsEditingColumnNames(true)}
-                        style={{ width: "200px" }}
-                      >
-                        Edit Column Names
-                      </button>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        marginTop: "12px",
-                      }}
-                    >
-                      <button
-                        className="smallButton"
-                        style={{ width: "70px" }}
-                        onClick={HandleStart}
-                      >
-                        Start
-                      </button>
-                    </div>
+                      Edit Column Names
+                    </button>
                   </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      marginTop: "12px",
+                      width: "200px",
+                      justifyContent: "space-around",
+                    }}
+                  >
+                    <button
+                      className="cancelButton"
+                      onClick={() => {
+                        setFiles(null);
+                        setIsEditingButtonVisible(false);
+                      }}
+                      style={{ marginRight: "1vw", width: "80px" }}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      className="smallButton"
+                      style={{ width: "100px" }}
+                      onClick={HandleStart}
+                    >
+                      Start
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div style={{ marginTop: "8px" }}>
+                  <button
+                    className="cancelButton"
+                    onClick={() => {
+                      setFiles(null);
+                      setIsEditingButtonVisible(false);
+                    }}
+                    style={{ marginRight: "1vw" }}
+                  >
+                    Cancel
+                  </button>
+                  <button className="smallButton" onClick={HandleUpload}>
+                    Upload
+                  </button>
+                </div>
+              )}
+              {/* <div style={{ marginTop: "10px" }}>
+                {isEditingButtonVisible ? (
+ 
                 ) : (
                   <p>Please click upload</p>
                 )}
-              </div>
+              </div> */}
             </div>
           </>
         )}

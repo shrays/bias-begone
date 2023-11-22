@@ -183,11 +183,12 @@ const Home = () => {
     return (
       <div className="flex-container">
         <div className="flex-left">
-          <h1 style={{ left: "10vw" }}>
+          <h1 style={{ left: "10vw", marginBottom: "3rem", marginTop: "3rem" }}>
             <span>What is </span>
             <span style={{ color: "#35a68d" }}>bias</span>
+            <span> in machine learning? </span>
           </h1>
-          <h1
+          {/* <h1
             style={{
               left: "10vw",
               fontSize: "1.7vw",
@@ -196,7 +197,7 @@ const Home = () => {
             }}
           >
             in machine learning?
-          </h1>
+          </h1> */}
           <div className="justified">
             Bias in machine learning happens when the algorithms or data used to
             train models unfairly favor some groups or outcomes over others.

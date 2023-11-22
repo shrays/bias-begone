@@ -1,4 +1,4 @@
-#!/Users/adelineclarissa/Desktop/bias-begone/FastAPI/myenv/bin/python
+#!/Users/adelineclarissa/bias-begone/FastAPI/myenv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
