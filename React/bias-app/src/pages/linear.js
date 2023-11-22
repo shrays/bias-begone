@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Matrix from "../components/Matrix";
 import ScatterPlot from "../components/Scatterplot";
+import { useNavigate } from "react-router-dom";
 
 const LinearCorrelation = () => {
   const location = useLocation();
@@ -12,8 +13,9 @@ const LinearCorrelation = () => {
     xColumn: "",
     yColumn: "",
   });
-  const { summary, tips, heatMap, columnNames, a, b } = location.state;
-
+  const navigate = useNavigate();
+  const { summary, tips, heatMap, columnNames, nonlinearHeatMap, mutual_info } =
+    location.state;
   const typeSummary = () => {
     const text = summary;
 
@@ -39,6 +41,19 @@ const LinearCorrelation = () => {
     setSelectedData({ xArray, yArray });
     setSelectedColumn({ xColumn, yColumn });
     console.log("selected columns: " + xColumn + " " + yColumn);
+  };
+
+  const handleClick = () => {
+    navigate("/nonlinear", {
+      state: {
+        summary,
+        tips,
+        heatMap,
+        columnNames,
+        nonlinearHeatMap,
+        mutual_info,
+      },
+    });
   };
 
   typeSummary();
@@ -80,7 +95,11 @@ const LinearCorrelation = () => {
           </div>
         </div>
       </div>
-
+      <div className="flex-container" style={{ justifyContent: "center" }}>
+        <div className="textButtonPlain" onClick={handleClick}>
+          NonLinear Correlation Analysis
+        </div>
+      </div>
       <div
         className="flex-container"
         style={{

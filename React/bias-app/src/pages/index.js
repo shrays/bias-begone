@@ -21,7 +21,6 @@ const Home = () => {
   const [files, setFiles] = useState(null);
   const inputref = useRef();
   const navigate = useNavigate();
-  const navigate2 = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const HandleUpload = async (event) => {
@@ -61,7 +60,8 @@ const Home = () => {
       const response = await api.post("/start/", data);
       if (response.status === 200) {
         // HeatMap Data is received here
-        const { heatMap, summary, tips, nonlinearHeatMap, mutual_info } = response.data;
+        const { heatMap, summary, tips, nonlinearHeatMap, mutual_info } =
+          response.data;
         console.log("New column names successfully sent");
 
         if (heatMap && typeof onSuccess === "function") {
@@ -93,18 +93,7 @@ const Home = () => {
           setHeatMap(heatMap);
           setnonlinearHeatMap(nonlinearHeatMap);
           setmutual_info(mutual_info);
-          navigate("/linear",  {
-            state: {
-              summary,
-              tips,
-              heatMap,
-              columnNames,
-              nonlinearHeatMap,
-              mutual_info,
-            },
-          });
-
-          navigate2("/nonlinear",  {
+          navigate("/linear", {
             state: {
               summary,
               tips,

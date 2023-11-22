@@ -183,6 +183,21 @@ h2 {
   }
 }
 
+.textButtonPlain {
+  background-color: transparent; /* Makes the background transparent */
+  border: none; /* Removes the border */
+  color: grey; /* Sets the initial color of the button text */
+  text-decoration: underline; /* Underlines the text */
+  font-size: 1.3vw;
+  cursor: pointer; /* Changes the cursor to signify it's clickable */
+  transition: color 0.3s; /* Smooth color transition for hover effect */
+  padding-top: 15px;
+
+  &:hover {
+    color: #35a68d; /* Change text color on hover */
+  }
+}
+
 .linear-heading {
   color: #000;
   font-size: 2rem;
