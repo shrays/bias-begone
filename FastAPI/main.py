@@ -10,7 +10,7 @@ from parseCSV import parser
 import io, models
 import pandas as pd
 from fastapi.responses import JSONResponse
-from matrix import construct_corr_from_df
+from matrix import construct_corr_from_df, nlc_distance_corr, nlc_Kendall, nlc_mic, nlc_mutual_info
 from chatgpt import get_resp
 
 app = FastAPI()
@@ -51,7 +51,6 @@ async def upload_file(file: UploadFile = File(...)):
             print("[log] csv file saved")
             return JSONResponse(content={
                 'columnNames': column_names,
-                'columnDataTypes': [str(dtype) for dtype in column_data_types],
             })
 
         except Exception as e:
@@ -70,11 +69,20 @@ async def start(data: ColumnData):
     df.columns = column_names
     # dataframe with updated column names
     heatmap_data = construct_corr_from_df(df)
-    print("[log] heatmap data generated")
+    print("[log] linear heatmap data generated")
+
     summary, tips = get_resp(df)
     print("[log] chatgpt response generated")
+
+    nonlinearHeatMap = [nlc_distance_corr(df), nlc_Kendall(df), nlc_mic(df)]
+
+    mutual_info = nlc_mutual_info(df, column_names[-1])
+
+    print("[log] nonlinear heatmap data generated")
     return JSONResponse(content={
                 'heatMap':  heatmap_data,
                 'summary' : summary,
-                'tips' : tips
+                'tips' : tips,
+                'nonlinearHeatMap' : nonlinearHeatMap,
+                'mutual_info' : mutual_info,
             })

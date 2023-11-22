@@ -9,7 +9,9 @@ const Home = () => {
   //const [selectedFile, setSelectedFile] = useState(null);
   const [uploadMessage, setUploadMessage] = useState("");
   const [columnNames, setColumnNames] = useState([]);
-  const [heatMap, setHeatMap] = useState([]); // heatmap data is a 2D list
+  const [mutual_info, setmutual_info] = useState([]);
+  const [nonlinearHeatMap, setnonlinearHeatMap] = useState([]);
+  const [heatMap, setHeatMap] = useState([]);
   const [summary, setSummary] = useState("");
   const [tips, setTips] = useState("");
   const [isEditingColumnNames, setIsEditingColumnNames] = useState(false);
@@ -19,6 +21,7 @@ const Home = () => {
   const [files, setFiles] = useState(null);
   const inputref = useRef();
   const navigate = useNavigate();
+  const navigate2 = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const HandleUpload = async (event) => {
@@ -28,7 +31,7 @@ const Home = () => {
 
       try {
         const response = await api.post("/uploadFile/", formData);
-        const { columnNames, columnDataTypes } = response.data;
+        const { columnNames } = response.data;
 
         if (columnNames) {
           setColumnNames(columnNames);
@@ -58,11 +61,11 @@ const Home = () => {
       const response = await api.post("/start/", data);
       if (response.status === 200) {
         // HeatMap Data is received here
-        const { heatMap, summary, tips } = response.data;
+        const { heatMap, summary, tips, nonlinearHeatMap, mutual_info } = response.data;
         console.log("New column names successfully sent");
 
         if (heatMap && typeof onSuccess === "function") {
-          onSuccess(heatMap, summary, tips);
+          onSuccess(heatMap, summary, tips, nonlinearHeatMap, mutual_info);
         }
       } else {
         console.error("New column names not sent:", response.data);
@@ -83,17 +86,32 @@ const Home = () => {
     try {
       await Start(
         columnNames,
-        (heatMap, summary, tips) => {
+        (heatMap, summary, tips, nonlinearHeatMap, mutual_info) => {
           setLoading(false);
           setSummary(summary);
           setTips(tips);
           setHeatMap(heatMap);
-          navigate("/linear", {
+          setnonlinearHeatMap(nonlinearHeatMap);
+          setmutual_info(mutual_info);
+          navigate("/linear",  {
             state: {
               summary,
               tips,
               heatMap,
               columnNames,
+              nonlinearHeatMap,
+              mutual_info,
+            },
+          });
+
+          navigate2("/nonlinear",  {
+            state: {
+              summary,
+              tips,
+              heatMap,
+              columnNames,
+              nonlinearHeatMap,
+              mutual_info,
             },
           });
         },
