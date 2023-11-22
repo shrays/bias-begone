@@ -12,7 +12,7 @@ const LinearCorrelation = () => {
     xColumn: "",
     yColumn: "",
   });
-  const { summary, tips, heatMap, columnNames } = location.state;
+  const { summary, tips, heatMap, columnNames, a, b } = location.state;
 
   const typeSummary = () => {
     const text = summary;

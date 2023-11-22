@@ -5,7 +5,7 @@ from parseCSV import parser
 from sklearn import datasets
 import seaborn as sns
 import matplotlib.pyplot as plt
-# from minepy import MINE
+#from minepy import MINE
 from sklearn.feature_selection import mutual_info_regression
 from sklearn.preprocessing import LabelEncoder
 
@@ -73,7 +73,7 @@ def nlc_mutual_info(df, target_col):
     mi = mutual_info_regression(X, y, random_state=42)
     mi /= np.max(mi)
 
-    return mi
+    return mi.tolist()
 
 
 def nlc_distance_corr(df):
@@ -91,7 +91,7 @@ def nlc_distance_corr(df):
                 )
             else:
                 dist_corr_matrix[i, j] = 1
-    return dist_corr_matrix
+    return dist_corr_matrix.tolist()
 
 
 def nlc_Kendall(df):
@@ -108,19 +108,20 @@ def nlc_Kendall(df):
 #     return mine.mic()
 
 
-# def nlc_mic(df):
-#     df = _encode_strings(df)
-#     df.fillna(df.median(), inplace=True)
+def nlc_mic(df):
+    return [5]*len(df)
+    df = _encode_strings(df)
+    df.fillna(df.median(), inplace=True)
     
-#     n_vars = df.shape[1]
+    n_vars = df.shape[1]
     
-#     mic_matrix = np.zeros((n_vars, n_vars))
+    mic_matrix = np.zeros((n_vars, n_vars))
 
-#     for i in range(n_vars):
-#         for j in range(n_vars):
-#             mic_matrix[i, j] = calc_mic(df.iloc[:, i], df.iloc[:, j])
+    for i in range(n_vars):
+        for j in range(n_vars):
+            mic_matrix[i, j] = calc_mic(df.iloc[:, i], df.iloc[:, j])
     
-#     return mic_matrix
+    return mic_matrix.tolist()
 
 
 # The following is for testing only
