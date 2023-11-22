@@ -4,9 +4,9 @@ import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages";
 import About from "./pages/about";
-import Settings from "./pages/settings";
-import Summary from "./pages/summary";
 import LinearCorrelation from "./pages/linear";
+import NonLinearCorrelation from "./pages/nonlinear";
+
 
 function App() {
   return (
@@ -15,9 +15,8 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/summary" element={<Summary />} />
         <Route path="/linear" element={<LinearCorrelation />} />
+        <Route path="/nonlinear" element={<NonLinearCorrelation />} />
       </Routes>
     </Router>
   );
